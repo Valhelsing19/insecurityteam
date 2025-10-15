@@ -8,4 +8,84 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Custom colors matching Figma design */
+    --color-amber-100: #FFF0CE;
+    --color-amber-200: #EBCB90;
+    --color-gray-200: #EEE;
+    --color-gray-300: #D7D7D7;
+    --color-blue-500: #3396D3;
+    --color-lime-400: #CED458;
+    --color-green-400: #6BDD71;
+    --color-amber-700: #766856;
+    --color-blue-300: #708A9A;
+    --color-amber-500: #926C47;
+}
+
+/* Custom font family configuration */
+.font-roboto {
+    font-family: 'Roboto', -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.font-archivo {
+    font-family: 'Archivo', -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+/* Dashboard specific styles */
+.side-menu {
+    box-shadow: 0 4px 100px 0 rgba(0, 0, 0, 0.50) inset;
+}
+
+.top-header {
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+}
+
+.dashboard-content {
+    box-shadow: 0 4px 50px 10px rgba(0, 0, 0, 0.25);
+}
+
+.request-card {
+    background: #FFF6F6;
+    box-shadow: 0 4px 10px 10px rgba(0, 0, 0, 0.25);
+}
+
+.logout-section {
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25) inset, 4px 0 10px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Status badge specific colors */
+.status-badge.in-progress {
+    background-color: #3396D3;
+}
+
+.status-badge.pending {
+    background-color: #CED458;
+}
+
+.status-badge.completed {
+    background-color: #6BDD71;
+}
+
+/* Active tab styling */
+.tab-btn.active {
+    background-color: #3396D3;
+    color: white;
+}
+
+/* Menu item hover effects */
+.profile-menu:hover,
+.submit-request-menu:hover,
+.request-management-menu:hover,
+.settings-menu:hover {
+    background-color: #C5C5C5;
+    cursor: pointer;
+}
+
+/* Custom spacing and positioning to match Figma exactly */
+.smart-logo {
+    border-radius: 216px;
+}
+
+.user-avatar {
+    border-radius: 139px;
 }
