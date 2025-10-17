@@ -17,3 +17,7 @@ Route::get('/login', function () {
 Route::get('/login/official', function () {
     return view('login_official');
 });
+
+Route::get('/register', function () {
+    return view('create_account');
+});
