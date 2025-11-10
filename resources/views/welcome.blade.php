@@ -404,7 +404,7 @@
         </p>
 
         <div class="button-group">
-          <button class="btn btn-primary" onclick="handleRegister()">REGISTER</button>
+          <a href="/register" class="btn btn-primary">REGISTER</a>
           <a href="/login" class="btn btn-secondary">LOG IN</a>
         </div>
       </div>
@@ -418,11 +418,5 @@
     </footer>
   </div>
 
-  <script>
-    function handleRegister() {
-      console.log('Register clicked');
-      alert('Registration page coming soon!');
-    }
-  </script>
 </body>
 </html>
