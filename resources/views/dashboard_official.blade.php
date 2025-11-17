@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Smart Neighborhood - Resident Dashboard</title>
+    <title>Smart Neighborhood - Official Dashboard</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,6 +15,7 @@
             --white: #FFFFFF;
             --text-dark: #0A0A0A;
             --text-gray: #717182;
+            --nav-text: #364153;
             --red: #E7000B;
             --blue: #155DFC;
             --blue-light: #EFF6FF;
@@ -22,8 +23,12 @@
             --green-light: #F0FDF4;
             --orange: #E17100;
             --orange-light: #FFFBEB;
+            --purple: #4F39F6;
+            --purple-light: #E0E7FF;
             --border: #E5E7EB;
+            --white-80: rgba(255, 255, 255, 0.8);
             --gradient-primary: linear-gradient(90deg, rgba(43, 127, 255, 1) 0%, rgba(79, 57, 246, 1) 100%);
+            --gradient-bg: linear-gradient(135deg, rgba(239, 246, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(238, 242, 255, 1) 100%);
             --shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
             --shadow-blue: 0px 4px 6px -4px rgba(43, 127, 255, 0.3), 0px 10px 15px -3px rgba(43, 127, 255, 0.3);
         }
@@ -52,7 +57,7 @@
             width: 256px;
             min-height: 100vh;
             background: var(--white);
-            border-right: 0.71px solid var(--border);
+            border-right: 0.91px solid var(--border);
             display: flex;
             flex-direction: column;
         }
@@ -138,7 +143,7 @@
         }
 
         .nav-button:not(.active) .nav-text {
-            color: #364153;
+            color: var(--nav-text);
         }
 
         .nav-icon {
@@ -154,8 +159,8 @@
         }
 
         .sidebar-footer {
-            padding: 16.71px 16px 0;
-            border-top: 0.71px solid var(--border);
+            padding: 16.9px 16px 0;
+            border-top: 0.91px solid var(--border);
         }
 
         .logout-button {
@@ -187,7 +192,7 @@
         /* Main Content */
         .main-content {
             flex: 1;
-            background: linear-gradient(135deg, rgba(239, 246, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(238, 242, 255, 1) 100%);
+            background: var(--gradient-bg);
             padding: 24px;
             min-height: 100vh;
         }
@@ -201,14 +206,14 @@
 
         .stat-card {
             flex: 1;
-            background: rgba(255, 255, 255, 0.8);
+            background: var(--white-80);
             border-radius: 14px;
             padding: 24px 0 0 24px;
             box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 39.51px;
+            gap: 165.87px;
         }
 
         .stat-content {
@@ -273,7 +278,7 @@
 
         .action-card {
             flex: 1;
-            background: rgba(255, 255, 255, 0.8);
+            background: var(--white-80);
             border-radius: 14px;
             box-shadow: var(--shadow);
             overflow: hidden;
@@ -306,10 +311,11 @@
 
         /* Recent Activity */
         .recent-activity {
-            background: rgba(255, 255, 255, 0.8);
+            background: var(--white-80);
             border-radius: 14px;
             box-shadow: var(--shadow);
             padding: 24px;
+            margin-bottom: 24px;
         }
 
         .activity-header {
@@ -346,14 +352,6 @@
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid var(--border);
             border-radius: 10px;
-        }
-
-        .activity-item.active {
-            border-left: 3.57px solid var(--orange);
-        }
-
-        .activity-item.review {
-            border-left: 3.57px solid var(--blue);
         }
 
         .activity-avatar {
@@ -408,11 +406,11 @@
 
         /* Announcements */
         .announcements {
-            background: rgba(255, 255, 255, 0.8);
+            background: var(--white-80);
             border-radius: 14px;
             box-shadow: var(--shadow);
             padding: 24px;
-            margin-top: 24px;
+            margin-bottom: 24px;
         }
 
         .announcements-header {
@@ -461,6 +459,44 @@
             gap: 16px;
         }
 
+        /* Need Help Card */
+        .help-card {
+            background: linear-gradient(135deg, #7C86FF 0%, #4F39F6 100%);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            padding: 24px;
+        }
+
+        .help-title {
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .help-description {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.43;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 16px;
+        }
+
+        .help-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--purple);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .stats-container,
@@ -490,31 +526,33 @@
                     </div>
                     <div class="logo-text">
                         <h2>Smart Neighborhood</h2>
-                        <p>resident Portal</p>
+                        <p>official Portal</p>
                     </div>
                 </div>
             </div>
 
             <nav class="navigation">
-                <a href="/dashboard" class="nav-button active">
+                <a href="/dashboard/official" class="nav-button active">
                     <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <path d="M7.5 10L12.5 15L17.5 10M12.5 5V15" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                        <rect x="2.5" y="2.5" width="15" height="15" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M15 7.5H10M15 12.5H10M7.5 7.5H5M7.5 12.5H5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
                     </svg>
-                    <span class="nav-text">Home</span>
+                    <span class="nav-text">Dashboard</span>
                 </a>
-                <a href="/submit-request" class="nav-button">
+                <a href="/requests" class="nav-button">
                     <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <path d="M1.67 1.67H18.33V18.33H1.67V1.67Z" stroke="currentColor" stroke-width="1.67"/>
-                        <path d="M10 6.67V13.33M6.67 10H13.33" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M6.67 1.67H13.33V18.33H6.67V1.67Z" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M3.33 6.67H6.67M3.33 10H6.67M3.33 13.33H6.67" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                        <path d="M10 6.67H13.33M10 10H13.33M10 13.33H13.33" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
                     </svg>
-                    <span class="nav-text">Submit Request</span>
+                    <span class="nav-text">All Requests</span>
                 </a>
-                <a href="/my-requests" class="nav-button">
+                <a href="/reports" class="nav-button">
                     <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <path d="M3.33 1.67H16.67V18.33H3.33V1.67Z" stroke="currentColor" stroke-width="1.67"/>
-                        <path d="M6.67 6.67H13.33M6.67 10H13.33M6.67 13.33H10" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                        <rect x="3.5" y="3.5" width="13" height="13" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M8 8V13M11 6V13M14 10V13" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
                     </svg>
-                    <span class="nav-text">My Requests</span>
+                    <span class="nav-text">Reports</span>
                 </a>
                 <a href="/settings" class="nav-button">
                     <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
@@ -585,24 +623,24 @@
                     <div class="action-card">
                         <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #51A2FF 0%, #155DFC 100%); border-radius: 14px 14px 0 0;"></div>
                         <div class="action-content">
-                            <h3 class="action-title">Submit New Request</h3>
-                            <p class="action-description">Report a maintenance issue</p>
+                            <h3 class="action-title">View Dashboard</h3>
+                            <p class="action-description">Monitor all activities</p>
                         </div>
                     </div>
 
                     <div class="action-card">
                         <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #00A63E 0%, #008A33 100%); border-radius: 14px 14px 0 0;"></div>
                         <div class="action-content">
-                            <h3 class="action-title">View My Requests</h3>
-                            <p class="action-description">Track your submissions</p>
+                            <h3 class="action-title">Manage Requests</h3>
+                            <p class="action-description">Assign and track requests</p>
                         </div>
                     </div>
 
                     <div class="action-card">
                         <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #7C86FF 0%, #4F39F6 100%); border-radius: 14px 14px 0 0;"></div>
                         <div class="action-content">
-                            <h3 class="action-title">Dashboard</h3>
-                            <p class="action-description">View statistics & insights</p>
+                            <h3 class="action-title">Generate Reports</h3>
+                            <p class="action-description">View analytics & reports</p>
                         </div>
                     </div>
                 </div>
@@ -621,7 +659,7 @@
                 </div>
 
                 <div class="activity-list">
-                    <div class="activity-item active">
+                    <div class="activity-item">
                         <div class="activity-avatar" style="background: #EFF6FF; display: flex; align-items: center; justify-content: center;">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M10 2L2 7V12C2 16.97 5.61 21.19 12 22C18.39 21.19 22 16.97 22 12V7L12 2Z" fill="#155DFC"/>
@@ -648,7 +686,7 @@
                         </div>
                     </div>
 
-                    <div class="activity-item review">
+                    <div class="activity-item">
                         <div class="activity-avatar" style="background: #F0FDF4; display: flex; align-items: center; justify-content: center;">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M10 2L2 7V12C2 16.97 5.61 21.19 12 22C18.39 21.19 22 16.97 22 12V7L12 2Z" fill="#00A63E"/>
@@ -707,7 +745,7 @@
             <!-- Announcements -->
             <div class="announcements">
                 <div class="announcements-header">
-                    <svg class="announcements-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <svg class="announcements-icon" viewBox="0 0 20 20" fill="none">
                         <path d="M10 2L2 7V12C2 16.97 5.61 21.19 12 22C18.39 21.19 22 16.97 22 12V7L12 2Z" stroke="#364153" stroke-width="1.67"/>
                     </svg>
                     <h2 class="section-title">Announcements</h2>
@@ -743,7 +781,15 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Need Help Card -->
+            <div class="help-card">
+                <h3 class="help-title">Need Help?</h3>
+                <p class="help-description">Our support team is here to assist you 24/7</p>
+                <a href="/support" class="help-button">Contact Support</a>
+            </div>
         </main>
     </div>
 </body>
 </html>
+

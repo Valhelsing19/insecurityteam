@@ -21,3 +21,7 @@ Route::get('/login/official', function () {
 Route::get('/register', function () {
     return view('create_account');
 });
+
+Route::get('/dashboard/official', function () {
+    return view('dashboard_official');
+});
