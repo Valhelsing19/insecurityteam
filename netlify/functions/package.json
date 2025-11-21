@@ -5,7 +5,8 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.6.5"
+    "mysql2": "^3.6.5",
+    "google-auth-library": "^9.0.0"
   }
 }
 

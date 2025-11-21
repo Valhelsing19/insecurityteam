@@ -1,3 +1,5 @@
+import { setAuth } from './auth.js';
+
 (function(){
   const togglePassword = document.getElementById('togglePassword');
   let passwordInput = document.getElementById('password');
@@ -7,6 +9,8 @@
   const passwordField = document.getElementById('passwordField');
   const emailInput = document.getElementById('email');
   const loginBtn = document.getElementById('loginBtn');
+  const alertMessage = document.getElementById('alertMessage');
+  const alertText = document.getElementById('alertText');
 
   // Password toggle functionality
   function setIcon(isVisible){
@@ -67,6 +71,35 @@
     field.classList.remove('error');
   }
 
+  function showAlert(message) {
+    if (alertMessage && alertText) {
+      alertText.textContent = message;
+      alertMessage.style.display = 'flex';
+      setTimeout(() => {
+        alertMessage.style.display = 'none';
+      }, 5000);
+    } else {
+      alert(message);
+    }
+  }
+
+  function setLoading(isLoading) {
+    if (loginBtn) {
+      loginBtn.disabled = isLoading;
+      const spinner = loginBtn.querySelector('.spinner');
+      const btnText = loginBtn.querySelector('.btn-text');
+      if (spinner && btnText) {
+        if (isLoading) {
+          spinner.style.display = 'inline-block';
+          btnText.textContent = 'Logging in...';
+        } else {
+          spinner.style.display = 'none';
+          btnText.textContent = 'Login';
+        }
+      }
+    }
+  }
+
   function validateForm() {
     let isValid = true;
 
@@ -113,28 +146,167 @@
 
   // Form submission handler
   if (loginForm) {
-    loginForm.addEventListener('submit', function(e) {
+    loginForm.addEventListener('submit', async function(e) {
       e.preventDefault();
 
       if (!validateForm()) {
         return false;
       }
 
-      // If validation passes, you can proceed with the actual form submission
-      // For now, we'll just prevent submission if validation fails
-      // Uncomment the line below when you're ready to submit the form
-      // this.submit();
-    });
-  }
+      setLoading(true);
 
-  // Also validate on button click (in case form submission is handled differently)
-  if (loginBtn) {
-    loginBtn.addEventListener('click', function(e) {
-      if (!validateForm()) {
-        e.preventDefault();
-        return false;
+      try {
+        const response = await fetch('/.netlify/functions/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: emailInput.value.trim(),
+            password: passwordInput.value,
+            isOfficial: false
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Store authentication
+          setAuth(data.token, data.user);
+          
+          // Redirect based on user type
+          if (data.user.isOfficial) {
+            window.location.href = '/dashboard/official.html';
+          } else {
+            window.location.href = '/dashboard.html';
+          }
+        } else {
+          showAlert(data.error || 'Invalid email or password');
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        showAlert('An error occurred. Please try again.');
+        setLoading(false);
       }
     });
   }
-})();
 
+  // Google Sign-In handler
+  const googleSigninBtn = document.getElementById('googleSignin');
+  if (googleSigninBtn) {
+    // Load and initialize Google Sign-In on page load
+    loadGoogleScript().then(() => {
+      // Initialize Google Sign-In
+      google.accounts.id.initialize({
+        client_id: '490999705819-m00vphvg4c9s7fm6oh849dipon6ac6t8.apps.googleusercontent.com',
+        callback: handleGoogleSignIn
+      });
+      console.log('Google Sign-In initialized');
+    }).catch(error => {
+      console.error('Failed to load Google script:', error);
+    });
+
+    // Handle button click
+    googleSigninBtn.addEventListener('click', async function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      console.log('Google Sign-In button clicked');
+      
+      try {
+        // Make sure script is loaded
+        if (!window.google || !window.google.accounts) {
+          console.log('Loading Google script...');
+          await loadGoogleScript();
+          google.accounts.id.initialize({
+            client_id: '490999705819-m00vphvg4c9s7fm6oh849dipon6ac6t8.apps.googleusercontent.com',
+            callback: handleGoogleSignIn
+          });
+        }
+
+        // Trigger sign-in prompt
+        console.log('Triggering Google Sign-In prompt...');
+        google.accounts.id.prompt((notification) => {
+          console.log('Prompt notification:', notification);
+          if (notification.isNotDisplayed()) {
+            console.warn('Prompt not displayed:', notification.getNotDisplayedReason());
+            showAlert('Google Sign-In popup was blocked. Please allow popups and try again.');
+          } else if (notification.isSkippedMoment()) {
+            console.warn('Prompt skipped:', notification.getSkippedReason());
+            // Try alternative method
+            showAlert('Please try clicking the button again or sign in manually.');
+          } else if (notification.isDismissedMoment()) {
+            console.warn('Prompt dismissed:', notification.getDismissedReason());
+          }
+        });
+      } catch (error) {
+        console.error('Google Sign-In error:', error);
+        showAlert('Failed to initialize Google Sign-In: ' + error.message);
+      }
+    });
+  }
+
+  // Load Google Identity Services script
+  function loadGoogleScript() {
+    return new Promise((resolve, reject) => {
+      if (window.google && window.google.accounts) {
+        resolve();
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.defer = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  // Handle Google Sign-In callback
+  async function handleGoogleSignIn(response) {
+    console.log('Google Sign-In callback received');
+    try {
+      setLoading(true);
+
+      if (!response || !response.credential) {
+        throw new Error('No credential received from Google');
+      }
+
+      // Send token to backend
+      const result = await fetch('/.netlify/functions/google-auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          token: response.credential,
+          isOfficial: false
+        })
+      });
+
+      const data = await result.json();
+
+      if (result.ok && data.success) {
+        // Store authentication
+        setAuth(data.token, data.user);
+        
+        // Redirect based on user type
+        if (data.user.isOfficial) {
+          window.location.href = '/dashboard/official.html';
+        } else {
+          window.location.href = '/dashboard.html';
+        }
+      } else {
+        showAlert(data.error || 'Google sign-in failed. Please try again.');
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Google sign-in error:', error);
+      showAlert('An error occurred during sign-in: ' + error.message);
+      setLoading(false);
+    }
+  }
+})();
