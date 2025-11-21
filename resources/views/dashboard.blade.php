@@ -10,474 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --white: #FFFFFF;
-            --text-dark: #0A0A0A;
-            --text-gray: #717182;
-            --red: #E7000B;
-            --blue: #155DFC;
-            --blue-light: #EFF6FF;
-            --green: #00A63E;
-            --green-light: #F0FDF4;
-            --orange: #E17100;
-            --orange-light: #FFFBEB;
-            --border: #E5E7EB;
-            --gradient-primary: linear-gradient(90deg, rgba(43, 127, 255, 1) 0%, rgba(79, 57, 246, 1) 100%);
-            --shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-blue: 0px 4px 6px -4px rgba(43, 127, 255, 0.3), 0px 10px 15px -3px rgba(43, 127, 255, 0.3);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arimo', Arial, sans-serif;
-            background: var(--white);
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        .dashboard-container {
-            display: flex;
-            width: 100%;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 256px;
-            min-height: 100vh;
-            background: var(--white);
-            border-right: 0.71px solid var(--border);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar-header {
-            padding: 24px 24px 0.71px;
-            border-bottom: 0.71px solid var(--border);
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .logo-circle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .logo-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo-text h2 {
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.43;
-            color: var(--text-dark);
-            margin: 0;
-        }
-
-        .logo-text p {
-            font-size: 12px;
-            font-weight: 400;
-            line-height: 1.33;
-            color: var(--text-dark);
-            text-transform: uppercase;
-            margin: 0;
-        }
-
-        .navigation {
-            flex: 1;
-            padding: 16px 0;
-        }
-
-        .nav-button {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 0 0 0 16px;
-            width: 223px;
-            height: 44px;
-            border-radius: 10px;
-            margin-left: 16px;
-            margin-bottom: 4px;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .nav-button.active {
-            background: var(--gradient-primary);
-            box-shadow: var(--shadow-blue);
-        }
-
-        .nav-button.active .nav-text {
-            color: var(--white);
-        }
-
-        .nav-button:not(.active) {
-            background: transparent;
-        }
-
-        .nav-button:not(.active) .nav-text {
-            color: #364153;
-        }
-
-        .nav-icon {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-        }
-
-        .nav-text {
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.43;
-        }
-
-        .sidebar-footer {
-            padding: 16.71px 16px 0;
-            border-top: 0.71px solid var(--border);
-        }
-
-        .logout-button {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-            height: 36px;
-            border-radius: 8px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        .logout-icon {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-
-        .logout-text {
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.43;
-            color: var(--red);
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            background: linear-gradient(135deg, rgba(239, 246, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(238, 242, 255, 1) 100%);
-            padding: 24px;
-            min-height: 100vh;
-        }
-
-        /* Statistics Cards */
-        .stats-container {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 14px;
-            padding: 24px 0 0 24px;
-            box-shadow: var(--shadow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 39.51px;
-        }
-
-        .stat-content {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.43;
-            color: var(--text-gray);
-        }
-
-        .stat-number {
-            font-size: 30px;
-            font-weight: 400;
-            line-height: 1.2;
-            color: var(--text-dark);
-        }
-
-        .stat-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 24px;
-        }
-
-        .stat-icon.active {
-            background: var(--blue-light);
-        }
-
-        .stat-icon.completed {
-            background: var(--green-light);
-        }
-
-        .stat-icon.pending {
-            background: var(--orange-light);
-        }
-
-        /* Quick Actions */
-        .quick-actions {
-            margin-bottom: 24px;
-        }
-
-        .section-title {
-            font-size: 20px;
-            font-weight: 400;
-            line-height: 1.2;
-            color: var(--text-dark);
-            margin-bottom: 16px;
-        }
-
-        .actions-grid {
-            display: flex;
-            gap: 16px;
-        }
-
-        .action-card {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 14px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-
-        .action-image {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-        }
-
-        .action-content {
-            padding: 16px;
-        }
-
-        .action-title {
-            font-size: 20px;
-            font-weight: 400;
-            line-height: 1.2;
-            color: var(--text-dark);
-            margin-bottom: 8px;
-        }
-
-        .action-description {
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.43;
-            color: var(--text-gray);
-        }
-
-        /* Recent Activity */
-        .recent-activity {
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 14px;
-            box-shadow: var(--shadow);
-            padding: 24px;
-        }
-
-        .activity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .view-all-button {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--text-dark);
-            cursor: pointer;
-        }
-
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .activity-item {
-            display: flex;
-            gap: 16px;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-        }
-
-        .activity-item.active {
-            border-left: 3.57px solid var(--orange);
-        }
-
-        .activity-item.review {
-            border-left: 3.57px solid var(--blue);
-        }
-
-        .activity-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .activity-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .activity-title {
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.43;
-            color: var(--text-dark);
-        }
-
-        .activity-description {
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.43;
-            color: var(--text-gray);
-        }
-
-        .activity-meta {
-            display: flex;
-            gap: 16px;
-            margin-top: 8px;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-            font-weight: 400;
-            line-height: 1.33;
-            color: var(--text-gray);
-        }
-
-        .meta-icon {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-
-        /* Announcements */
-        .announcements {
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 14px;
-            box-shadow: var(--shadow);
-            padding: 24px;
-            margin-top: 24px;
-        }
-
-        .announcements-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .announcements-icon {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-        }
-
-        .announcements-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .announcement-item {
-            padding: 16px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
-
-        .announcement-title {
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.43;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-        }
-
-        .announcement-description {
-            font-size: 12px;
-            font-weight: 400;
-            line-height: 1.33;
-            color: var(--text-gray);
-            margin-bottom: 8px;
-        }
-
-        .announcement-meta {
-            display: flex;
-            gap: 16px;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .stats-container,
-            .actions-grid {
-                flex-direction: column;
-            }
-
-            .dashboard-container {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                min-height: auto;
-            }
-        }
-    </style>
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 </head>
 <body>
     <div class="dashboard-container">
@@ -583,7 +117,7 @@
                 <h2 class="section-title">Quick Actions</h2>
                 <div class="actions-grid">
                     <div class="action-card">
-                        <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #51A2FF 0%, #155DFC 100%); border-radius: 14px 14px 0 0;"></div>
+                        <div class="action-header blue-gradient"></div>
                         <div class="action-content">
                             <h3 class="action-title">Submit New Request</h3>
                             <p class="action-description">Report a maintenance issue</p>
@@ -591,7 +125,7 @@
                     </div>
 
                     <div class="action-card">
-                        <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #00A63E 0%, #008A33 100%); border-radius: 14px 14px 0 0;"></div>
+                        <div class="action-header green-gradient"></div>
                         <div class="action-content">
                             <h3 class="action-title">View My Requests</h3>
                             <p class="action-description">Track your submissions</p>
@@ -599,7 +133,7 @@
                     </div>
 
                     <div class="action-card">
-                        <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #7C86FF 0%, #4F39F6 100%); border-radius: 14px 14px 0 0;"></div>
+                        <div class="action-header purple-gradient"></div>
                         <div class="action-content">
                             <h3 class="action-title">Dashboard</h3>
                             <p class="action-description">View statistics & insights</p>
@@ -622,7 +156,7 @@
 
                 <div class="activity-list">
                     <div class="activity-item active">
-                        <div class="activity-avatar" style="background: #EFF6FF; display: flex; align-items: center; justify-content: center;">
+                        <div class="activity-avatar blue-bg">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M10 2L2 7V12C2 16.97 5.61 21.19 12 22C18.39 21.19 22 16.97 22 12V7L12 2Z" fill="#155DFC"/>
                             </svg>
@@ -649,7 +183,7 @@
                     </div>
 
                     <div class="activity-item review">
-                        <div class="activity-avatar" style="background: #F0FDF4; display: flex; align-items: center; justify-content: center;">
+                        <div class="activity-avatar green-bg">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M10 2L2 7V12C2 16.97 5.61 21.19 12 22C18.39 21.19 22 16.97 22 12V7L12 2Z" fill="#00A63E"/>
                             </svg>
@@ -676,7 +210,7 @@
                     </div>
 
                     <div class="activity-item">
-                        <div class="activity-avatar" style="background: #EFF6FF; display: flex; align-items: center; justify-content: center;">
+                        <div class="activity-avatar blue-bg">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M10 2L2 7V12C2 16.97 5.61 21.19 12 22C18.39 21.19 22 16.97 22 12V7L12 2Z" fill="#155DFC"/>
                             </svg>
@@ -714,7 +248,7 @@
                 </div>
 
                 <div class="announcements-list">
-                    <div class="announcement-item" style="background: #FFFBEB; border-left: 3.57px solid #FE9A00;">
+                    <div class="announcement-item orange-bg">
                         <h4 class="announcement-title">Scheduled Maintenance</h4>
                         <p class="announcement-description">Water supply will be interrupted on Oct 15 from 9 AM to 12 PM</p>
                         <div class="announcement-meta">
@@ -728,7 +262,7 @@
                         </div>
                     </div>
 
-                    <div class="announcement-item" style="background: #EFF6FF; border-left: 3.57px solid #2B7FFF;">
+                    <div class="announcement-item blue-bg">
                         <h4 class="announcement-title">New Feature Available</h4>
                         <p class="announcement-description">You can now track your requests in real-time</p>
                         <div class="announcement-meta">
@@ -745,5 +279,8 @@
             </div>
         </main>
     </div>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/dashboard.js') }}" defer></script>
 </body>
 </html>

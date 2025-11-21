@@ -14,665 +14,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --primary-blue: #155DFC;
-      --primary-purple: #4F39F6;
-      --primary-purple-dark: #9810FA;
-      --light-blue: #DBEAFE;
-      --light-purple: #E0E7FF;
-      --text-dark: #0A0A0A;
-      --text-gray: #717182;
-      --white: #FFFFFF;
-      --white-80: rgba(255, 255, 255, 0.8);
-      --white-50: rgba(255, 255, 255, 0.5);
-      --gradient-primary: linear-gradient(90deg, #155DFC 0%, #4F39F6 50%, #9810FA 100%);
-      --gradient-primary-short: linear-gradient(90deg, #155DFC 0%, #4F39F6 100%);
-      --gradient-bg: linear-gradient(135deg, rgba(239, 246, 255, 1) 0%, rgba(238, 242, 255, 1) 50%, rgba(250, 245, 255, 1) 100%);
-      --gradient-overlay: linear-gradient(135deg, rgba(43, 127, 255, 0.1) 0%, rgba(97, 95, 255, 0.1) 50%, rgba(173, 70, 255, 0.1) 100%);
-      --shadow-sm: 0px 4px 6px -4px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-      --shadow-md: 0px 8px 10px -6px rgba(0, 0, 0, 0.1), 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
-      --shadow-lg: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
-      --shadow-blue: 0px 8px 10px -6px rgba(43, 127, 255, 0.3), 0px 20px 25px -5px rgba(43, 127, 255, 0.3);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Arimo', Arial, sans-serif;
-      background: var(--gradient-bg);
-      color: var(--text-dark);
-      overflow-x: hidden;
-      min-height: 100vh;
-      line-height: 1.5;
-    }
-
-    .skip-link{
-      position: absolute;
-      left: -9999px;
-      top: 0;
-      background: #fff;
-      color: #000;
-      padding: .5rem .75rem;
-      border-radius: 6px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.1);
-    }
-    .skip-link:focus{
-      left: 1rem;
-      top: 1rem;
-      z-index: 9999;
-      outline: 3px solid #000;
-      outline-offset: 4px;
-    }
-
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background: var(--white-80);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1), 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
-    }
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 16px;
-      height: 73px;
-    }
-
-    .logo-section {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-circle {
-      width: 66px;
-      height: 66px;
-      border-radius: 50%;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .logo-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .logo-text h1 {
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--text-dark);
-      line-height: 1.5;
-      margin: 0;
-    }
-
-    .logo-text p {
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--text-gray);
-      line-height: 1.33;
-      margin: 0;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn-login {
-      padding: 8px 16px;
-      background: transparent;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-dark);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .btn-get-started {
-      padding: 8px 16px;
-      background: var(--gradient-primary-short);
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--white);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      box-shadow: var(--shadow-blue);
-    }
-
-    /* Background Hero Section */
-    .hero-background {
-      position: relative;
-      width: 100%;
-      height: 857px;
-      margin-top: 73px;
-    }
-
-    .hero-bg-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.2;
-    }
-
-    .hero-gradient {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--gradient-overlay);
-    }
-
-    /* Main Content */
-    .landing-page {
-      position: relative;
-      z-index: 10;
-    }
-
-    /* Hero Section */
-    .hero-section {
-      padding: 96px 16px 0;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .hero-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 64px;
-      padding-bottom: 64px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 16px;
-      padding: 8px 16px;
-      background: var(--light-blue);
-      border-radius: 999px;
-      font-size: 14px;
-      color: #1447E6;
-    }
-
-    .badge-icon {
-      width: 16px;
-      height: 16px;
-    }
-
-    .hero-heading {
-      text-align: center;
-      max-width: 1248px;
-    }
-
-    .hero-title {
-      font-size: 60px;
-      font-weight: 400;
-      line-height: 1;
-      text-align: center;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin: 0;
-    }
-
-    .hero-description {
-      font-size: 18px;
-      line-height: 1.56;
-      color: var(--text-gray);
-      text-align: center;
-      max-width: 672px;
-      margin: 28px auto 0;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      margin-top: 40px;
-    }
-
-    .btn-primary-gradient {
-      padding: 8px 16px;
-      background: var(--gradient-primary-short);
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--white);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: var(--shadow-blue);
-    }
-
-    .btn-outline {
-      padding: 8px 24px;
-      background: var(--white);
-      border: 1.82px solid rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-dark);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    /* Feature Cards Section */
-    .feature-cards {
-      display: flex;
-      gap: 12px;
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-
-    .feature-card {
-      flex: 1;
-      background: var(--white-80);
-      border-radius: 14px;
-      padding: 24px 0 0 24px;
-      box-shadow: var(--shadow-md);
-      display: flex;
-      gap: 16px;
-    }
-
-    .feature-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      flex-shrink: 0;
-    }
-
-    .feature-icon.blue {
-      background: var(--light-blue);
-    }
-
-    .feature-icon.purple {
-      background: var(--light-purple);
-    }
-
-    .feature-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .feature-title {
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 1.4;
-      color: var(--text-dark);
-      margin: 0;
-    }
-
-    .feature-description {
-      font-size: 16px;
-      line-height: 1.5;
-      color: var(--text-gray);
-      margin: 0;
-    }
-
-    .feature-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .feature-list-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      color: var(--text-dark);
-    }
-
-    .check-icon {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-    }
-
-    /* Everything You Need Section */
-    .features-section {
-      padding: 48px 16px;
-      background: var(--white-50);
-      margin-top: 48px;
-    }
-
-    .section-header {
-      text-align: center;
-      max-width: 1280px;
-      margin: 0 auto 48px;
-    }
-
-    .section-title {
-      font-size: 36px;
-      font-weight: 400;
-      line-height: 1.11;
-      background: var(--gradient-primary-short);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin: 0 0 24px;
-    }
-
-    .section-subtitle {
-      font-size: 16px;
-      line-height: 1.5;
-      color: var(--text-gray);
-      margin: 0;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .feature-box {
-      background: var(--white-80);
-      border-radius: 14px;
-      padding: 24px 0 0 24px;
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-    }
-
-    .feature-box-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .feature-box-icon.tracking {
-      background: linear-gradient(135deg, #51A2FF 0%, #155DFC 100%);
-    }
-
-    .feature-box-icon.analytics {
-      background: linear-gradient(135deg, #7C86FF 0%, #4F39F6 100%);
-    }
-
-    .feature-box-icon.collaboration {
-      background: linear-gradient(135deg, #C27AFF 0%, #9810FA 100%);
-    }
-
-    .feature-box-title {
-      font-size: 18px;
-      font-weight: 400;
-      line-height: 1.56;
-      color: var(--text-dark);
-      margin: 0;
-    }
-
-    .feature-box-description {
-      font-size: 14px;
-      line-height: 1.43;
-      color: var(--text-gray);
-      margin: 0;
-    }
-
-    /* Community in Action Section */
-    .community-section {
-      padding: 64px 16px;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .community-card {
-      position: relative;
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-      margin-top: 32px;
-    }
-
-    .community-image {
-      width: 100%;
-      height: 500px;
-      object-fit: cover;
-    }
-
-    .community-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 50%;
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%);
-    }
-
-    .community-content {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 32px;
-    }
-
-    .community-title {
-      font-size: 24px;
-      font-weight: 400;
-      line-height: 1.33;
-      color: var(--white);
-      margin: 0 0 16px;
-    }
-
-    .carousel-dots {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 16px;
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--white-50);
-      border: none;
-      cursor: pointer;
-    }
-
-    .dot.active {
-      width: 32px;
-      background: var(--white);
-    }
-
-    .carousel-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--white-80);
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .carousel-nav.prev {
-      left: 16px;
-    }
-
-    .carousel-nav.next {
-      right: 16px;
-    }
-
-    /* CTA Section */
-    .cta-section {
-      padding: 48px;
-      background: var(--gradient-primary);
-      border-radius: 14px;
-      max-width: 1248px;
-      margin: 48px auto;
-      text-align: center;
-      box-shadow: var(--shadow-md);
-    }
-
-    .cta-title {
-      font-size: 36px;
-      font-weight: 400;
-      line-height: 1.11;
-      color: var(--white);
-      margin: 0 0 24px;
-    }
-
-    .cta-description {
-      font-size: 16px;
-      line-height: 1.5;
-      color: var(--light-blue);
-      max-width: 672px;
-      margin: 0 auto 40px;
-    }
-
-    .cta-buttons {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-    }
-
-    .btn-cta-primary {
-      padding: 8px 16px;
-      background: var(--white);
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--primary-blue);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: var(--shadow-md);
-    }
-
-    .btn-cta-outline {
-      padding: 8px 24px;
-      background: transparent;
-      border: 1.82px solid var(--white);
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--white);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    /* Footer */
-    footer {
-      padding: 33px 91px 0;
-      background: var(--white-50);
-      border-top: 1px solid #E5E7EB;
-    }
-
-    .footer-content {
-      text-align: center;
-      padding-bottom: 20px;
-    }
-
-    .footer-text {
-      font-size: 14px;
-      line-height: 1.43;
-      color: var(--text-gray);
-      margin: 0;
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .hero-title {
-        font-size: 36px;
-      }
-
-      .feature-cards {
-        flex-direction: column;
-      }
-
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-buttons,
-      .cta-buttons {
-        flex-direction: column;
-        width: 100%;
-      }
-
-      .btn-primary-gradient,
-      .btn-outline,
-      .btn-cta-primary,
-      .btn-cta-outline {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .header-actions {
-        gap: 8px;
-      }
-
-      .btn-login,
-      .btn-get-started {
-        padding: 6px 12px;
-        font-size: 12px;
-      }
-    }
-  </style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
@@ -691,27 +34,25 @@
       </div>
       <div class="header-actions">
         <a href="/login" class="btn-login">Login</a>
+        <a href="/login/official" class="btn-official-login">Official Login</a>
         <a href="/register" class="btn-get-started">Get Started</a>
       </div>
     </div>
   </header>
 
-  <!-- Hero Background -->
-  <div class="hero-background">
-    <img src="/images/background-hero.png" alt="" class="hero-bg-image" loading="lazy">
-    <div class="hero-gradient"></div>
-  </div>
-
   <!-- Main Content -->
   <main id="main" class="landing-page">
     <!-- Hero Section -->
     <section class="hero-section">
+      <!-- Hero Background -->
+      <div class="hero-background">
+        <img src="/images/background-hero.png" alt="" class="hero-bg-image" loading="lazy">
+        <div class="hero-gradient"></div>
+      </div>
       <div class="hero-content">
         <div class="badge">
           <svg class="badge-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.33 1.33H13.33V13.33H1.33V1.33Z" stroke="#155DFC" stroke-width="1.33"/>
-            <path d="M12 2.67H13.33V4H12V2.67Z" stroke="#155DFC" stroke-width="1.33"/>
-            <path d="M1.33 12H2.67V13.33H1.33V12Z" stroke="#155DFC" stroke-width="1.33"/>
+            <path d="M8 1.5L9.5 5.5L13.5 7L9.5 8.5L8 12.5L6.5 8.5L2.5 7L6.5 5.5L8 1.5Z" stroke="white" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           </svg>
           <span>Modern Community Management</span>
         </div>
@@ -739,9 +80,9 @@
       <div class="feature-cards">
         <div class="feature-card">
           <div class="feature-icon blue">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="margin: 12px;">
-              <path d="M9 12L12 15L21 6" stroke="#155DFC" stroke-width="2" stroke-linecap="round"/>
-              <path d="M3 12L6 15L15 6" stroke="#155DFC" stroke-width="2" stroke-linecap="round"/>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M3 12L12 3L21 12V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V12Z" stroke="#155DFC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 22V12H15V22" stroke="#155DFC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="feature-content">
@@ -751,20 +92,20 @@
             </p>
             <div class="feature-list">
               <div class="feature-list-item">
-                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
-                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.33" stroke-linecap="round"/>
+                <svg class="check-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.3328598737716675" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span>Quick request submission</span>
               </div>
               <div class="feature-list-item">
-                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
-                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.33" stroke-linecap="round"/>
+                <svg class="check-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.3328598737716675" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span>Real-time status updates</span>
               </div>
               <div class="feature-list-item">
-                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
-                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.33" stroke-linecap="round"/>
+                <svg class="check-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.3328598737716675" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span>Request history tracking</span>
               </div>
@@ -774,9 +115,10 @@
 
         <div class="feature-card">
           <div class="feature-icon purple">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin: 14px;">
-              <path d="M4 2H16V18H4V2Z" stroke="#4F39F6" stroke-width="2"/>
-              <path d="M21 10.5H16V9.5H21V10.5Z" stroke="#4F39F6" stroke-width="2"/>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L3 7V12C3 16.55 6.36 20.74 12 22C17.64 20.74 21 16.55 21 12V7L12 2Z" stroke="#4F39F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 8V12" stroke="#4F39F6" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 16H12.01" stroke="#4F39F6" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
           <div class="feature-content">
@@ -786,20 +128,20 @@
             </p>
             <div class="feature-list">
               <div class="feature-list-item">
-                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
-                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.33" stroke-linecap="round"/>
+                <svg class="check-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.3328598737716675" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span>Centralized dashboard</span>
               </div>
               <div class="feature-list-item">
-                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
-                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.33" stroke-linecap="round"/>
+                <svg class="check-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.3328598737716675" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span>Team assignment tools</span>
               </div>
               <div class="feature-list-item">
-                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
-                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.33" stroke-linecap="round"/>
+                <svg class="check-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 6.66L4 8.66L6.66 11.33L12 6" stroke="#00A63E" stroke-width="1.3328598737716675" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span>Analytics & reporting</span>
               </div>
@@ -930,5 +272,8 @@
       </p>
     </div>
   </footer>
+
+  <!-- Scripts -->
+  <script src="{{ asset('js/welcome.js') }}" defer></script>
 </body>
 </html>

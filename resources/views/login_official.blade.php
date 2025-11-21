@@ -8,175 +8,10 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --official: #200DD1;        /* primary accent for officials */
-      --official-600: #1508A8;    /* hover/darker */
-      --ink: rgba(0, 0, 0, 0.78);
-      --radius-md: 24px;          /* slightly sharper than resident */
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Archivo', sans-serif;
-      background: #FFFFFF;
-      overflow-x: hidden;
-      min-height: 100dvh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .main-container {
-      position: relative;
-      width: 100%;
-      min-height: 100dvh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Background + gradient (same look as welcome) */
-    .background-image {
-      position: absolute; inset: 0;
-      background-image: url('/images/background-image.png');
-      background-size: cover; background-position: center;
-      z-index: 1;
-    }
-    .gradient-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        143deg,
-        rgba(236,204,100,.5) 0%,
-        rgba(151,151,151,.4) 36%,
-        rgba(56,8,231,.3) 100%
-      );
-      z-index: 2;
-    }
-
-    /* Official login card */
-    .login-card {
-      position: relative; z-index: 4;
-      width: 90%; max-width: 360px;            /* compact but comfortable */
-      background: rgba(217,217,217,.56);
-      border-radius: var(--radius-md);
-      box-shadow: 0 16px 40px rgba(0,0,0,.22); /* stronger shadow */
-      padding: 1.25rem 1.25rem 1.5rem;
-      backdrop-filter: blur(6px) saturate(110%);
-      -webkit-backdrop-filter: blur(6px) saturate(110%);
-      display: flex; flex-direction: column;
-      align-items: center; gap: 1rem;
-      text-align: center;
-    }
-
-    /* Top security banner */
-    .secure-banner {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .5rem;
-      background: rgba(32, 13, 209, 0.1);
-      border: 1px solid rgba(32, 13, 209, 0.25);
-      color: var(--official);
-      font-weight: 700;
-      font-size: 13px;
-      padding: .5rem .75rem;
-      border-radius: 10px;
-    }
-
-    /* Logo */
-    .main-logo {
-      width: 160px;
-      height: 160px;
-      background-image: url('/images/smart-neighborhood-logo.png');
-      background-size: cover; background-position: center;
-      border-radius: 50%;
-      margin: .25rem auto .25rem;
-    }
-
-    /* Title (small, official tone) */
-    .portal-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-top: .25rem;
-    }
-
-    /* Form */
-    form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-    .field { width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: .3rem; }
-    label { font-size: 14px; font-weight: 600; color: var(--ink); }
-
-    input[type="email"], input[type="password"] {
-      width: 100%; height: 46px;
-      border-radius: 8px; border: 1px solid #E0E0E0;
-      padding: 0 12px; background: #fff;
-      font-size: 15px; color: #000;
-      transition: border-color .3s, box-shadow .3s;
-    }
-    input::placeholder { color: rgba(146,146,146,.78); }
-    input:focus { border-color: var(--official); box-shadow: 0 0 0 3px rgba(32,13,209,.15); outline: none; }
-
-    .forgot-password {
-      width: 100%;
-      text-align: right;
-      font-size: 13px;
-      color: var(--ink);
-      text-decoration: none;
-      margin-top: -0.5rem;
-      transition: color .2s;
-    }
-    .forgot-password:hover { color: var(--official-600); }
-
-    /* Buttons */
-    .action-buttons { width: 100%; display: flex; flex-direction: column; gap: .6rem; margin-top: .25rem; }
-
-    .btn {
-      height: 50px; border: none; border-radius: 50px;
-      font-weight: 700; font-size: 18px; color: #fff; cursor: pointer;
-      transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
-    }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,.22); }
-    .btn:active { transform: translateY(0); box-shadow: none; }
-
-    /* Secure login (violet) */
-    .btn-secure { background: var(--official); }
-    .btn-secure:hover { background: var(--official-600); }
-
-    /* Optional alternate auth (Gov ID / SSO placeholder) */
-    .divider { margin: .5rem 0; font-size: 13px; color: var(--ink); }
-    .alt-auth {
-      display: flex; align-items: center; justify-content: center; gap: .4rem;
-      font-size: 13px; color: var(--ink);
-    }
-    .alt-auth a { color: var(--official); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
-    .alt-auth a:hover { color: var(--official-600); }
-
-    /* Return to resident portal */
-    .back-resident {
-      margin-top: .75rem;
-      font-size: 13px; color: var(--ink);
-    }
-    .back-resident a { color: var(--official); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
-    .back-resident a:hover { color: var(--official-600); }
-
-    @media (max-width: 480px) {
-      .login-card { max-width: 340px; padding: 1rem; border-radius: 20px; }
-      .main-logo { width: 130px; height: 130px; }
-      .btn { height: 46px; font-size: 17px; }
-    }
-  </style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ asset('css/login-official.css') }}">
 </head>
 <body>
   <div class="main-container">
@@ -184,36 +19,57 @@
     <div class="gradient-overlay" aria-hidden="true"></div>
 
     <div class="login-card">
-      <div class="secure-banner" role="status" aria-live="polite">
-        🔒 Authorized Personnel Only
+      <div class="main-logo" aria-label="Smart Neighborhood Logo"></div>
+      <h1 class="system-title">Smart Neighborhood</h1>
+      <p class="system-tagline">Official Access Portal</p>
+      <div class="security-badge">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z" fill="currentColor"/>
+          <path d="M10 14l-2-2-1.5 1.5L10 17l6-6-1.5-1.5L10 14z" fill="white"/>
+        </svg>
+        Authorized Personnel Only
       </div>
 
-      <div class="main-logo" aria-label="Smart Neighborhood Logo"></div>
+      <div class="alert alert-error" id="alertMessage">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 8v4m0 4h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span id="alertText">Invalid email or password</span>
+      </div>
 
-      <div class="portal-title">Official Access Portal</div>
-
-      <form action="#" method="POST" novalidate>
-        <!-- @csrf -->
-
-        <div class="field">
+      <form id="loginForm" novalidate>
+        <div class="field" id="emailField">
           <label for="email">Official Email</label>
           <input id="email" name="email" type="email" placeholder="name@city.gov" autocomplete="email" required>
+          <span class="error-message">Please enter a valid email address</span>
         </div>
 
-        <div class="field">
+        <div class="field" id="passwordField">
           <label for="password">Password</label>
-          <input id="password" name="password" type="password" placeholder="**************" autocomplete="current-password" required>
+          <div class="input-wrapper">
+            <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required>
+            <button type="button" class="password-toggle" id="togglePassword" aria-label="Show password" aria-pressed="false" title="Show password">
+              <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- initial: hidden state icon (eye-off) -->
+                <path d="M2 4.27L3.28 3l17.5 17.5L20.5 22l-2.1-2.1c-1.9.83-4.02 1.35-6.4 1.35-5 0-9.27-3.11-11-7.5 1.03-2.62 2.94-4.78 5.3-6.16L2 4.27zM12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l1.7 1.7C20.2 13.9 21.27 12.35 22 10.5 20.27 6.11 16 3 11 3c-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zm-4.47 2.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2z" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+          <span class="error-message">Password is required</span>
         </div>
 
         <a href="#" class="forgot-password">Forgot password?</a>
 
         <div class="action-buttons">
-          <button type="submit" class="btn btn-secure">Secure Login</button>
+          <button type="submit" class="btn btn-secure" id="loginBtn">
+            <span class="spinner"></span>
+            <span class="btn-text">Secure Login</span>
+          </button>
         </div>
 
         <div class="divider">— or —</div>
 
-        <!-- Optional alternate auth link (replace with your SSO/Gov ID route if needed) -->
         <div class="alt-auth">
           <span>Use alternate ID?</span>
           <a href="#">Sign in with Gov ID</a>
@@ -226,5 +82,8 @@
       </form>
     </div>
   </div>
+
+  <!-- Scripts -->
+  <script src="{{ asset('js/login-official.js') }}"></script>
 </body>
 </html>

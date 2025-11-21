@@ -1,0 +1,289 @@
+:root {
+  --error: #EF4444;
+  --radius-md: 8px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Arimo', sans-serif;
+  background: linear-gradient(135deg, rgba(239, 246, 255, 1) 0%, rgba(238, 242, 255, 1) 50%, rgba(250, 245, 255, 1) 100%);
+  overflow-x: hidden;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.main-container {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background-image {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(239, 246, 255, 1) 0%, rgba(238, 242, 255, 1) 50%, rgba(250, 245, 255, 1) 100%);
+  z-index: 1;
+}
+
+.gradient-overlay {
+  display: none;
+}
+
+/* Card */
+.card {
+  position: relative; z-index: 4;
+  width: 90%; max-width: 608px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 14px;
+  box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 24px 24px 24px 24px;
+  display: flex; flex-direction: column; gap: 32px;
+}
+
+/* Header Section */
+.header-section {
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  text-align: center;
+}
+
+.logo {
+  width: 102px; height: 102px;
+  background-image: url('/images/smart-neighborhood-logo.png');
+  background-size: cover; background-position: center;
+  border-radius: 216px;
+  margin: 0 auto 0.25rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 400;
+  font-family: 'Arimo', sans-serif;
+  background: linear-gradient(90deg, rgba(21, 93, 252, 1) 0%, rgba(79, 57, 246, 1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2em;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'Arimo', sans-serif;
+  color: #717182;
+  line-height: 1.5em;
+  text-align: center;
+}
+
+/* Form */
+.form-section {
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.form-row {
+  display: flex; gap: 12px; width: 100%;
+}
+
+.form-row .field {
+  flex: 1;
+}
+
+.field {
+  display: flex; flex-direction: column; gap: 8px;
+  width: 100%;
+}
+
+.field.full-width {
+  width: 100%;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Arimo', sans-serif;
+  color: #0A0A0A;
+  line-height: 1em;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper input {
+  width: 100%;
+  height: 36px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 0.714286px solid rgba(0, 0, 0, 0);
+  padding: 4px 12px 4px 40px;
+  background: #FFFFFF;
+  font-size: 14px;
+  font-family: 'Arimo', sans-serif;
+  font-weight: 400;
+  line-height: 1.14990234375em;
+  color: #000;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-wrapper input::placeholder {
+  color: #717182;
+  font-family: 'Arimo', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.input-wrapper input:focus {
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 3px rgba(21, 93, 252, 0.15);
+  outline: none;
+  background: #fff;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  color: #717182;
+}
+
+.field.error input {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.error-message {
+  font-size: 12px;
+  font-family: 'Arimo', sans-serif;
+  color: var(--error);
+  display: none;
+  text-align: left;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.field.error .error-message {
+  display: block;
+}
+
+/* Address field - full width */
+.address-field {
+  width: 100%;
+}
+
+.address-field .input-wrapper input {
+  padding: 4px 12px 4px 40px;
+}
+
+/* Button */
+.btn-create {
+  width: 100%;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 400;
+  font-size: 14px;
+  font-family: 'Arimo', sans-serif;
+  line-height: 1.4285714285714286em;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: linear-gradient(90deg, rgba(21, 93, 252, 1) 0%, rgba(79, 57, 246, 1) 100%);
+  box-shadow: 0px 4px 6px -4px rgba(43, 127, 255, 0.3), 0px 10px 15px -3px rgba(43, 127, 255, 0.3);
+}
+
+.btn-create:hover:not(:disabled) {
+  box-shadow: 0px 6px 8px -4px rgba(43, 127, 255, 0.4), 0px 12px 18px -3px rgba(43, 127, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-create:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-create:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Google sign-in (match login page) */
+.google-signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  background: rgba(255,255,255,0.95);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 0.714286px solid rgba(0, 0, 0, 0);
+  width: 100%;
+}
+.google-signin:hover {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  transform: translateY(-1px);
+}
+.google-signin svg { width: 18px; height: 18px; }
+.google-signin-text {
+  font-size: 14px;
+  font-family: 'Arimo', sans-serif;
+  color: #0A0A0A;
+  font-weight: 400;
+}
+
+/* Footer */
+.footer-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 14px;
+  font-family: 'Arimo', sans-serif;
+  font-weight: 400;
+  color: #717182;
+}
+
+.footer-section a {
+  color: #155DFC;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-section a:hover {
+  color: rgba(21, 93, 252, 0.8);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .card {
+    max-width: 100%;
+    padding: 1.5rem 1.5rem;
+    gap: 32px;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .subtitle {
+    font-size: 14px;
+  }
+}
+
