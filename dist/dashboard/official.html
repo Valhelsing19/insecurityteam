@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Smart Neighborhood - Resident Dashboard</title>
+    <title>Smart Neighborhood - Official Dashboard</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/dashboard-official.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -24,31 +24,33 @@
                     </div>
                     <div class="logo-text">
                         <h2>Smart Neighborhood</h2>
-                        <p>resident Portal</p>
+                        <p>official Portal</p>
                     </div>
                 </div>
             </div>
 
             <nav class="navigation">
-                <a href="/dashboard" class="nav-button active">
+                <a href="/dashboard/official" class="nav-button active">
                     <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <path d="M7.5 10L12.5 15L17.5 10M12.5 5V15" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                        <rect x="2.5" y="2.5" width="15" height="15" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M15 7.5H10M15 12.5H10M7.5 7.5H5M7.5 12.5H5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
                     </svg>
-                    <span class="nav-text">Home</span>
+                    <span class="nav-text">Dashboard</span>
                 </a>
-                <a href="/submit-request" class="nav-button">
+                <a href="/requests" class="nav-button">
                     <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <path d="M1.67 1.67H18.33V18.33H1.67V1.67Z" stroke="currentColor" stroke-width="1.67"/>
-                        <path d="M10 6.67V13.33M6.67 10H13.33" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M6.67 1.67H13.33V18.33H6.67V1.67Z" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M3.33 6.67H6.67M3.33 10H6.67M3.33 13.33H6.67" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                        <path d="M10 6.67H13.33M10 10H13.33M10 13.33H13.33" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
                     </svg>
-                    <span class="nav-text">Submit Request</span>
+                    <span class="nav-text">All Requests</span>
                 </a>
-                <a href="/my-requests" class="nav-button">
+                <a href="/reports" class="nav-button">
                     <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <path d="M3.33 1.67H16.67V18.33H3.33V1.67Z" stroke="currentColor" stroke-width="1.67"/>
-                        <path d="M6.67 6.67H13.33M6.67 10H13.33M6.67 13.33H10" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                        <rect x="3.5" y="3.5" width="13" height="13" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M8 8V13M11 6V13M14 10V13" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
                     </svg>
-                    <span class="nav-text">My Requests</span>
+                    <span class="nav-text">Reports</span>
                 </a>
                 <a href="/settings" class="nav-button">
                     <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
@@ -119,24 +121,24 @@
                     <div class="action-card">
                         <div class="action-header blue-gradient"></div>
                         <div class="action-content">
-                            <h3 class="action-title">Submit New Request</h3>
-                            <p class="action-description">Report a maintenance issue</p>
+                            <h3 class="action-title">View Dashboard</h3>
+                            <p class="action-description">Monitor all activities</p>
                         </div>
                     </div>
 
                     <div class="action-card">
                         <div class="action-header green-gradient"></div>
                         <div class="action-content">
-                            <h3 class="action-title">View My Requests</h3>
-                            <p class="action-description">Track your submissions</p>
+                            <h3 class="action-title">Manage Requests</h3>
+                            <p class="action-description">Assign and track requests</p>
                         </div>
                     </div>
 
                     <div class="action-card">
                         <div class="action-header purple-gradient"></div>
                         <div class="action-content">
-                            <h3 class="action-title">Dashboard</h3>
-                            <p class="action-description">View statistics & insights</p>
+                            <h3 class="action-title">Generate Reports</h3>
+                            <p class="action-description">View analytics & reports</p>
                         </div>
                     </div>
                 </div>
@@ -155,7 +157,7 @@
                 </div>
 
                 <div class="activity-list">
-                    <div class="activity-item active">
+                    <div class="activity-item">
                         <div class="activity-avatar blue-bg">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M10 2L2 7V12C2 16.97 5.61 21.19 12 22C18.39 21.19 22 16.97 22 12V7L12 2Z" fill="#155DFC"/>
@@ -182,7 +184,7 @@
                         </div>
                     </div>
 
-                    <div class="activity-item review">
+                    <div class="activity-item">
                         <div class="activity-avatar green-bg">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M10 2L2 7V12C2 16.97 5.61 21.19 12 22C18.39 21.19 22 16.97 22 12V7L12 2Z" fill="#00A63E"/>
@@ -241,7 +243,7 @@
             <!-- Announcements -->
             <div class="announcements">
                 <div class="announcements-header">
-                    <svg class="announcements-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <svg class="announcements-icon" viewBox="0 0 20 20" fill="none">
                         <path d="M10 2L2 7V12C2 16.97 5.61 21.19 12 22C18.39 21.19 22 16.97 22 12V7L12 2Z" stroke="#364153" stroke-width="1.67"/>
                     </svg>
                     <h2 class="section-title">Announcements</h2>
@@ -277,10 +279,18 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Need Help Card -->
+            <div class="help-card">
+                <h3 class="help-title">Need Help?</h3>
+                <p class="help-description">Our support team is here to assist you 24/7</p>
+                <a href="/support" class="help-button">Contact Support</a>
+            </div>
         </main>
     </div>
 
     <!-- Scripts -->
-    <script src="/js/dashboard.js" defer></script>
+    <script src="/js/dashboard-official.js" defer></script>
 </body>
 </html>
+

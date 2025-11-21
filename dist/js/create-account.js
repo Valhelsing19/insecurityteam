@@ -1,5 +1,3 @@
-import { setAuth } from './auth.js';
-
 (function(){
   const form = document.getElementById('createAccountForm');
   const createAccountBtn = document.getElementById('createAccountBtn');
@@ -21,15 +19,6 @@ import { setAuth } from './auth.js';
 
   function clearFieldError(field) {
     field.classList.remove('error');
-  }
-
-  function setLoading(isLoading) {
-    createAccountBtn.disabled = isLoading;
-    if (isLoading) {
-      createAccountBtn.textContent = 'Creating Account...';
-    } else {
-      createAccountBtn.textContent = 'Create Account';
-    }
   }
 
   function validateForm() {
@@ -130,56 +119,22 @@ import { setAuth } from './auth.js';
 
   // Form submission handler
   if (form) {
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
 
       if (!validateForm()) {
         return false;
       }
 
-      setLoading(true);
-
-      try {
-        const response = await fetch('/.netlify/functions/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            first_name: document.getElementById('first_name').value.trim(),
-            last_name: document.getElementById('last_name').value.trim(),
-            username: document.getElementById('username').value.trim(),
-            email: document.getElementById('email').value.trim(),
-            phone: document.getElementById('phone').value.trim(),
-            password: document.getElementById('password').value,
-            address: document.getElementById('address').value.trim()
-          })
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          // Store authentication
-          setAuth(data.token, data.user);
-          
-          // Redirect to dashboard
-          window.location.href = '/dashboard.html';
-        } else {
-          alert(data.error || 'Registration failed. Please try again.');
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Registration error:', error);
-        alert('An error occurred. Please try again.');
-        setLoading(false);
-      }
+      // If validation passes, you can proceed with the actual form submission
+      // Uncomment the line below when you're ready to submit the form
+      // this.submit();
     });
   }
 
   if (googleSignupBtn) {
     googleSignupBtn.addEventListener('click', function() {
-      // Google signup functionality can be added later
-      alert('Google signup coming soon!');
+      window.location.href = '/auth/google';
     });
   }
 })();
