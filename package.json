@@ -4,7 +4,18 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
+        "build:netlify": "npm run copy-assets && npm run convert-html && npm run install-functions",
+        "copy-assets": "node scripts/copy-assets.js",
+        "convert-html": "node scripts/convert-html.js",
+        "install-functions": "cd netlify/functions && npm install",
         "dev": "vite"
+    },
+    "dependencies": {
+        "bootstrap": "^5.3.8",
+        "sass": "^1.93.1",
+        "bcryptjs": "^2.4.3",
+        "jsonwebtoken": "^9.0.2",
+        "mysql2": "^3.6.5"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
@@ -13,9 +24,5 @@
         "laravel-vite-plugin": "^2.0.0",
         "tailwindcss": "^4.0.0",
         "vite": "^7.0.4"
-    },
-    "dependencies": {
-        "bootstrap": "^5.3.8",
-        "sass": "^1.93.1"
     }
 }
