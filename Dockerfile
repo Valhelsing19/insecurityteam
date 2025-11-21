@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     nginx \
     supervisor \
+    gettext-base \
     && docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring zip opcache \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -55,19 +56,21 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage \
     && chmod -R 775 /var/www/html/bootstrap/cache
 
-# Copy nginx, supervisor configurations, and startup script
-COPY docker/nginx.conf /etc/nginx/sites-available/default
+# Copy nginx template, supervisor configurations, and startup script
+COPY docker/nginx.conf.template /etc/nginx/templates/default.conf.template
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/start.sh /usr/local/bin/start.sh
 
 # Make startup script executable
 RUN chmod +x /usr/local/bin/start.sh
 
-# Create supervisor log directory
-RUN mkdir -p /var/log/supervisor
+# Create supervisor log directory and nginx sites-enabled
+RUN mkdir -p /var/log/supervisor \
+    && mkdir -p /etc/nginx/sites-enabled \
+    && rm -f /etc/nginx/sites-enabled/default
 
-# Expose port
-EXPOSE 80
+# Expose port (Render will provide PORT env var)
+EXPOSE ${PORT:-80}
 
 # Use startup script
 CMD ["/usr/local/bin/start.sh"]
