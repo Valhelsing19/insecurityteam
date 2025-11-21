@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Helper function to replace Blade syntax with static paths
 function convertBladeToHTML(content) {
@@ -54,4 +58,3 @@ bladeFiles.forEach(({ src, dest }) => {
 });
 
 console.log('HTML conversion completed!');
-
