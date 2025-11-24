@@ -1,7 +1,6 @@
 import { setAuth } from './auth.js';
 
-(function(){
-  const togglePassword = document.getElementById('togglePassword');
+const togglePassword = document.getElementById('togglePassword');
   let passwordInput = document.getElementById('password');
   const eyeIcon = document.getElementById('eyeIcon');
   const loginForm = document.getElementById('loginForm');
@@ -173,12 +172,12 @@ import { setAuth } from './auth.js';
         if (response.ok && data.success) {
           // Store authentication
           setAuth(data.token, data.user);
-          
+
           // Redirect based on user type
           if (data.user.isOfficial) {
-            window.location.href = '/dashboard/official.html';
+            window.location.href = '/dashboard/official';
           } else {
-            window.location.href = '/dashboard.html';
+            window.location.href = '/dashboard';
           }
         } else {
           showAlert(data.error || 'Invalid email or password');
@@ -202,48 +201,20 @@ import { setAuth } from './auth.js';
         client_id: '490999705819-m00vphvg4c9s7fm6oh849dipon6ac6t8.apps.googleusercontent.com',
         callback: handleGoogleSignIn
       });
-      console.log('Google Sign-In initialized');
+
+      // Render the Google Sign-In button (this handles clicks automatically)
+      google.accounts.id.renderButton(googleSigninBtn, {
+        theme: 'outline',
+        size: 'large',
+        width: '100%',
+        text: 'signin_with',
+        type: 'standard'
+      });
+
+      console.log('Google Sign-In initialized and button rendered');
     }).catch(error => {
       console.error('Failed to load Google script:', error);
-    });
-
-    // Handle button click
-    googleSigninBtn.addEventListener('click', async function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      console.log('Google Sign-In button clicked');
-      
-      try {
-        // Make sure script is loaded
-        if (!window.google || !window.google.accounts) {
-          console.log('Loading Google script...');
-          await loadGoogleScript();
-          google.accounts.id.initialize({
-            client_id: '490999705819-m00vphvg4c9s7fm6oh849dipon6ac6t8.apps.googleusercontent.com',
-            callback: handleGoogleSignIn
-          });
-        }
-
-        // Trigger sign-in prompt
-        console.log('Triggering Google Sign-In prompt...');
-        google.accounts.id.prompt((notification) => {
-          console.log('Prompt notification:', notification);
-          if (notification.isNotDisplayed()) {
-            console.warn('Prompt not displayed:', notification.getNotDisplayedReason());
-            showAlert('Google Sign-In popup was blocked. Please allow popups and try again.');
-          } else if (notification.isSkippedMoment()) {
-            console.warn('Prompt skipped:', notification.getSkippedReason());
-            // Try alternative method
-            showAlert('Please try clicking the button again or sign in manually.');
-          } else if (notification.isDismissedMoment()) {
-            console.warn('Prompt dismissed:', notification.getDismissedReason());
-          }
-        });
-      } catch (error) {
-        console.error('Google Sign-In error:', error);
-        showAlert('Failed to initialize Google Sign-In: ' + error.message);
-      }
+      showAlert('Failed to load Google Sign-In. Please refresh the page.');
     });
   }
 
@@ -275,38 +246,93 @@ import { setAuth } from './auth.js';
         throw new Error('No credential received from Google');
       }
 
-      // Send token to backend
-      const result = await fetch('/.netlify/functions/google-auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          token: response.credential,
-          isOfficial: false
-        })
-      });
+      // Send token to backend with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-      const data = await result.json();
+      let result;
+      try {
+        result = await fetch('/.netlify/functions/google-auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            token: response.credential,
+            isOfficial: false
+          }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+      } catch (fetchError) {
+        clearTimeout(timeoutId);
+        if (fetchError.name === 'AbortError') {
+          throw new Error('Request timed out. Please check your internet connection and try again.');
+        } else if (fetchError.message && fetchError.message.includes('Failed to fetch')) {
+          throw new Error('Network error. Please check your internet connection and try again.');
+        } else {
+          throw new Error('Failed to connect to server. Please try again.');
+        }
+      }
+
+      // Parse JSON response with error handling
+      let data;
+      try {
+        const text = await result.text();
+        if (!text) {
+          throw new Error('Empty response from server');
+        }
+        data = JSON.parse(text);
+      } catch (parseError) {
+        console.error('JSON parse error:', parseError);
+        throw new Error('Invalid response from server. Please try again.');
+      }
 
       if (result.ok && data.success) {
+        // Validate response data
+        if (!data.token || !data.user) {
+          throw new Error('Invalid response from server. Missing authentication data.');
+        }
+
         // Store authentication
-        setAuth(data.token, data.user);
-        
+        try {
+          setAuth(data.token, data.user);
+        } catch (authError) {
+          console.error('Auth storage error:', authError);
+          throw new Error('Failed to save authentication. Please try again.');
+        }
+
         // Redirect based on user type
-        if (data.user.isOfficial) {
-          window.location.href = '/dashboard/official.html';
-        } else {
-          window.location.href = '/dashboard.html';
+        try {
+          if (data.user.isOfficial) {
+            window.location.href = '/dashboard/official';
+          } else {
+            window.location.href = '/dashboard';
+          }
+        } catch (redirectError) {
+          console.error('Redirect error:', redirectError);
+          showAlert('Sign-in successful, but redirect failed. Please navigate to the dashboard manually.');
+          setLoading(false);
         }
       } else {
-        showAlert(data.error || 'Google sign-in failed. Please try again.');
+        // Handle error response
+        const errorMessage = data.error || 'Google sign-in failed. Please try again.';
+        showAlert(errorMessage);
         setLoading(false);
       }
     } catch (error) {
       console.error('Google sign-in error:', error);
-      showAlert('An error occurred during sign-in: ' + error.message);
+      let errorMessage = 'An error occurred during sign-in.';
+
+      if (error.message) {
+        errorMessage = error.message;
+      } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        errorMessage = 'Network error. Please check your internet connection and try again.';
+      } else if (error.name === 'SyntaxError') {
+        errorMessage = 'Invalid response from server. Please try again.';
+      }
+
+      showAlert(errorMessage);
       setLoading(false);
     }
   }
-})();

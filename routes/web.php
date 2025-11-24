@@ -6,6 +6,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
@@ -25,3 +26,8 @@ Route::get('/register', function () {
 Route::get('/dashboard/official', function () {
     return view('dashboard_official');
 });
+
+Route::get('/dashboard/resident', function () {
+    return view('dashboard_resident');
+});
+

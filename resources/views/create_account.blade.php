@@ -152,6 +152,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="{{ asset('js/create-account.js') }}" defer></script>
+  <script type="module" src="{{ asset('js/create-account.js') }}"></script>
 </body>
 </html>

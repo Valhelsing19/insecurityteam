@@ -28,7 +28,8 @@ netlify dev
 
 3. **Access the site**:
    - Open browser: `http://localhost:8888`
-   - Navigate to: `http://localhost:8888/login.html`
+   - Navigate to: `
+   http://localhost:8888/login.html`
 
 4. **Test Google Sign-In**:
    - Click "Sign in with Gmail" button

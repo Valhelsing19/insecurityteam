@@ -8,7 +8,9 @@
         "copy-assets": "node scripts/copy-assets.js",
         "convert-html": "node scripts/convert-html.js",
         "install-functions": "cd netlify/functions && npm install",
-        "dev": "vite"
+        "dev": "vite",
+        "dev:netlify": "npm run build:netlify && node server.cjs",
+        "serve": "node server.cjs"
     },
     "dependencies": {
         "bootstrap": "^5.3.8",

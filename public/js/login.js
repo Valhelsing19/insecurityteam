@@ -1,5 +1,6 @@
-(function(){
-  const togglePassword = document.getElementById('togglePassword');
+import { setAuth } from './auth.js';
+
+const togglePassword = document.getElementById('togglePassword');
   let passwordInput = document.getElementById('password');
   const eyeIcon = document.getElementById('eyeIcon');
   const loginForm = document.getElementById('loginForm');
@@ -7,6 +8,8 @@
   const passwordField = document.getElementById('passwordField');
   const emailInput = document.getElementById('email');
   const loginBtn = document.getElementById('loginBtn');
+  const alertMessage = document.getElementById('alertMessage');
+  const alertText = document.getElementById('alertText');
 
   // Password toggle functionality
   function setIcon(isVisible){
@@ -67,6 +70,35 @@
     field.classList.remove('error');
   }
 
+  function showAlert(message) {
+    if (alertMessage && alertText) {
+      alertText.textContent = message;
+      alertMessage.style.display = 'flex';
+      setTimeout(() => {
+        alertMessage.style.display = 'none';
+      }, 5000);
+    } else {
+      alert(message);
+    }
+  }
+
+  function setLoading(isLoading) {
+    if (loginBtn) {
+      loginBtn.disabled = isLoading;
+      const spinner = loginBtn.querySelector('.spinner');
+      const btnText = loginBtn.querySelector('.btn-text');
+      if (spinner && btnText) {
+        if (isLoading) {
+          spinner.style.display = 'inline-block';
+          btnText.textContent = 'Logging in...';
+        } else {
+          spinner.style.display = 'none';
+          btnText.textContent = 'Login';
+        }
+      }
+    }
+  }
+
   function validateForm() {
     let isValid = true;
 
@@ -113,28 +145,194 @@
 
   // Form submission handler
   if (loginForm) {
-    loginForm.addEventListener('submit', function(e) {
+    loginForm.addEventListener('submit', async function(e) {
       e.preventDefault();
 
       if (!validateForm()) {
         return false;
       }
 
-      // If validation passes, you can proceed with the actual form submission
-      // For now, we'll just prevent submission if validation fails
-      // Uncomment the line below when you're ready to submit the form
-      // this.submit();
-    });
-  }
+      setLoading(true);
 
-  // Also validate on button click (in case form submission is handled differently)
-  if (loginBtn) {
-    loginBtn.addEventListener('click', function(e) {
-      if (!validateForm()) {
-        e.preventDefault();
-        return false;
+      try {
+        const response = await fetch('/.netlify/functions/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: emailInput.value.trim(),
+            password: passwordInput.value,
+            isOfficial: false
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Store authentication
+          setAuth(data.token, data.user);
+
+          // Redirect based on user type
+          if (data.user.isOfficial) {
+            window.location.href = '/dashboard/official';
+          } else {
+            window.location.href = '/dashboard';
+          }
+        } else {
+          showAlert(data.error || 'Invalid email or password');
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        showAlert('An error occurred. Please try again.');
+        setLoading(false);
       }
     });
   }
-})();
 
+  // Google Sign-In handler
+  const googleSigninBtn = document.getElementById('googleSignin');
+  if (googleSigninBtn) {
+    // Load and initialize Google Sign-In on page load
+    loadGoogleScript().then(() => {
+      // Initialize Google Sign-In
+      google.accounts.id.initialize({
+        client_id: '490999705819-m00vphvg4c9s7fm6oh849dipon6ac6t8.apps.googleusercontent.com',
+        callback: handleGoogleSignIn
+      });
+
+      // Render the Google Sign-In button (this handles clicks automatically)
+      google.accounts.id.renderButton(googleSigninBtn, {
+        theme: 'outline',
+        size: 'large',
+        width: '100%',
+        text: 'signin_with',
+        type: 'standard'
+      });
+
+      console.log('Google Sign-In initialized and button rendered');
+    }).catch(error => {
+      console.error('Failed to load Google script:', error);
+      showAlert('Failed to load Google Sign-In. Please refresh the page.');
+    });
+  }
+
+  // Load Google Identity Services script
+  function loadGoogleScript() {
+    return new Promise((resolve, reject) => {
+      if (window.google && window.google.accounts) {
+        resolve();
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.defer = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  // Handle Google Sign-In callback
+  async function handleGoogleSignIn(response) {
+    console.log('Google Sign-In callback received');
+    try {
+      setLoading(true);
+
+      if (!response || !response.credential) {
+        throw new Error('No credential received from Google');
+      }
+
+      // Send token to backend with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
+      let result;
+      try {
+        result = await fetch('/.netlify/functions/google-auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            token: response.credential,
+            isOfficial: false
+          }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+      } catch (fetchError) {
+        clearTimeout(timeoutId);
+        if (fetchError.name === 'AbortError') {
+          throw new Error('Request timed out. Please check your internet connection and try again.');
+        } else if (fetchError.message && fetchError.message.includes('Failed to fetch')) {
+          throw new Error('Network error. Please check your internet connection and try again.');
+        } else {
+          throw new Error('Failed to connect to server. Please try again.');
+        }
+      }
+
+      // Parse JSON response with error handling
+      let data;
+      try {
+        const text = await result.text();
+        if (!text) {
+          throw new Error('Empty response from server');
+        }
+        data = JSON.parse(text);
+      } catch (parseError) {
+        console.error('JSON parse error:', parseError);
+        throw new Error('Invalid response from server. Please try again.');
+      }
+
+      if (result.ok && data.success) {
+        // Validate response data
+        if (!data.token || !data.user) {
+          throw new Error('Invalid response from server. Missing authentication data.');
+        }
+
+        // Store authentication
+        try {
+          setAuth(data.token, data.user);
+        } catch (authError) {
+          console.error('Auth storage error:', authError);
+          throw new Error('Failed to save authentication. Please try again.');
+        }
+
+        // Redirect based on user type
+        try {
+          if (data.user.isOfficial) {
+            window.location.href = '/dashboard/official';
+          } else {
+            window.location.href = '/dashboard';
+          }
+        } catch (redirectError) {
+          console.error('Redirect error:', redirectError);
+          showAlert('Sign-in successful, but redirect failed. Please navigate to the dashboard manually.');
+          setLoading(false);
+        }
+      } else {
+        // Handle error response
+        const errorMessage = data.error || 'Google sign-in failed. Please try again.';
+        showAlert(errorMessage);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Google sign-in error:', error);
+      let errorMessage = 'An error occurred during sign-in.';
+
+      if (error.message) {
+        errorMessage = error.message;
+      } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        errorMessage = 'Network error. Please check your internet connection and try again.';
+      } else if (error.name === 'SyntaxError') {
+        errorMessage = 'Invalid response from server. Please try again.';
+      }
+
+      showAlert(errorMessage);
+      setLoading(false);
+    }
+  }

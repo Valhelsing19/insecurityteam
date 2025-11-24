@@ -1,19 +1,49 @@
 [build]
   publish = "dist"
   command = "npm run build:netlify"
+  functions = "netlify/functions"
+
+[dev]
+  port = 8888
+  publish = "dist"
 
 [build.environment]
   NODE_VERSION = "18"
 
-# Redirect all routes to index.html for SPA-like behavior
+# Headers for JavaScript modules
+[[headers]]
+  for = "/js/*.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Access-Control-Allow-Origin = "*"
+
+# Redirects for clean URLs
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/login"
+  to = "/login.html"
   status = 200
 
-# API routes go to Netlify Functions
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  from = "/register"
+  to = "/register.html"
   status = 200
 
+[[redirects]]
+  from = "/dashboard"
+  to = "/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/login/official"
+  to = "/login/official.html"
+  status = 200
+
+[[redirects]]
+  from = "/dashboard/official"
+  to = "/dashboard/official.html"
+  status = 200
+
+# Note: Removed catch-all redirect to index.html
+# This was causing Google Sign-In redirects to fail
+# Actual HTML files (dashboard.html, login.html, etc.) should be served directly
+# Netlify Functions are automatically available at /.netlify/functions/* - no redirect needed
