@@ -28,34 +28,33 @@
             </div>
             <nav class="navigation">
                 <a href="/dashboard/official" class="nav-button">
-                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <rect x="2.5" y="2.5" width="15" height="15" stroke="currentColor" stroke-width="1.67"/>
-                        <path d="M15 7.5H10.83L10 4.17L6.67 11.67H2.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
-                        <path d="M10.83 4.17L10 7.5L6.67 11.67" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.5 2.5V15.8333C2.5 16.2754 2.67559 16.6993 2.98816 17.0118C3.30072 17.3244 3.72464 17.5 4.16667 17.5H17.5" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15 14.1667V7.5" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.8334 14.1666V4.16663" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.66663 14.1666V11.6666" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span class="nav-text">Dashboard</span>
                 </a>
                 <a href="/all-requests" class="nav-button">
-                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <rect x="6.67" y="1.67" width="6.67" height="3.33" stroke="currentColor" stroke-width="1.67"/>
-                        <rect x="3.33" y="3.33" width="13.33" height="15" stroke="currentColor" stroke-width="1.67"/>
-                        <path d="M10 9.17H10.01M10 13.33H10.01" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.5 1.66663H7.49996C7.03972 1.66663 6.66663 2.03972 6.66663 2.49996V4.16663C6.66663 4.62686 7.03972 4.99996 7.49996 4.99996H12.5C12.9602 4.99996 13.3333 4.62686 13.3333 4.16663V2.49996C13.3333 2.03972 12.9602 1.66663 12.5 1.66663Z" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M13.3334 3.33337H15C15.4421 3.33337 15.866 3.50897 16.1786 3.82153C16.4911 4.13409 16.6667 4.55801 16.6667 5.00004V16.6667C16.6667 17.1087 16.4911 17.5327 16.1786 17.8452C15.866 18.1578 15.4421 18.3334 15 18.3334H5.00004C4.55801 18.3334 4.13409 18.1578 3.82153 17.8452C3.50897 17.5327 3.33337 17.1087 3.33337 16.6667V5.00004C3.33337 4.55801 3.50897 4.13409 3.82153 3.82153C4.13409 3.50897 4.55801 3.33337 5.00004 3.33337H6.66671" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 9.16663H13.3333" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 13.3334H13.3333" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.66663 9.16663H6.67496" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.66663 13.3334H6.67496" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span class="nav-text">All Requests</span>
                 </a>
                 <a href="/reports" class="nav-button">
-                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <rect x="3.33" y="1.67" width="13.33" height="16.67" stroke="currentColor" stroke-width="1.67"/>
-                        <path d="M6.67 9.17H6.67M6.67 13.33H6.67" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.5 2.5V15.8333C2.5 16.2754 2.67559 16.6993 2.98816 17.0118C3.30072 17.3244 3.72464 17.5 4.16667 17.5H17.5" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15 14.1667V7.5" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.8334 14.1666V4.16663" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.66663 14.1666V11.6666" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <span class="nav-text">Reports</span>
-                </a>
-                <a href="/settings/official" class="nav-button">
-                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <circle cx="10" cy="10" r="5" stroke="currentColor" stroke-width="1.67"/>
-                        <path d="M10 2.54V5M10 15V17.46M17.46 10H15M5 10H2.54" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
-                    </svg>
-                    <span class="nav-text">Settings</span>
+                    <span class="nav-text">Activity Log</span>
                 </a>
             </nav>
             <div class="sidebar-footer">
@@ -86,7 +85,6 @@
                                 <path d="M6 12L10 8L6 4" stroke="#155DFC" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </a>
-                        <button class="welcome-button secondary">Learn More</button>
                     </div>
                 </div>
             </div>
@@ -118,9 +116,9 @@
                         <div class="stat-number" id="stat-active">0</div>
                     </div>
                     <div class="stat-icon blue">
-                        <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
-                            <rect x="12" y="6" width="4" height="8" stroke="#155DFC" stroke-width="2"/>
-                            <rect x="2" y="2" width="19.99" height="19.99" stroke="#155DFC" stroke-width="2"/>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.9957 5.99792V11.9958L15.9943 13.9951" stroke="#155DFC" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11.9957 21.9922C17.5166 21.9922 21.9922 17.5166 21.9922 11.9957C21.9922 6.47483 17.5166 1.99927 11.9957 1.99927C6.47483 1.99927 1.99927 6.47483 1.99927 11.9957C1.99927 17.5166 6.47483 21.9922 11.9957 21.9922Z" stroke="#155DFC" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
                 </div>
@@ -130,9 +128,9 @@
                         <div class="stat-number" id="stat-completed">0</div>
                     </div>
                     <div class="stat-icon green">
-                        <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
-                            <path d="M9 10L9 6L9 10" stroke="#00A63E" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M4 10L10 10L16 10" stroke="#00A63E" stroke-width="2" stroke-linecap="round"/>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.9957 21.9922C17.5166 21.9922 21.9922 17.5166 21.9922 11.9957C21.9922 6.47483 17.5166 1.99927 11.9957 1.99927C6.47483 1.99927 1.99927 6.47483 1.99927 11.9957C1.99927 17.5166 6.47483 21.9922 11.9957 21.9922Z" stroke="#00A63E" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8.99683 11.9957L10.9961 13.995L14.9947 9.99646" stroke="#00A63E" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
                 </div>
@@ -142,10 +140,9 @@
                         <div class="stat-number" id="stat-pending">0</div>
                     </div>
                     <div class="stat-icon orange">
-                        <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
-                            <path d="M1.98 2.99L20.01 18.01" stroke="#E17100" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M12 9L12 0L12 9" stroke="#E17100" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M12 16.99L12 12L12 16.99" stroke="#E17100" stroke-width="2" stroke-linecap="round"/>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.9957 5.99792V11.9958L15.9943 13.9951" stroke="#155DFC" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11.9957 21.9922C17.5166 21.9922 21.9922 17.5166 21.9922 11.9957C21.9922 6.47483 17.5166 1.99927 11.9957 1.99927C6.47483 1.99927 1.99927 6.47483 1.99927 11.9957C1.99927 17.5166 6.47483 21.9922 11.9957 21.9922Z" stroke="#155DFC" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
                 </div>
@@ -157,9 +154,9 @@
                 <div class="actions-grid">
                     <div class="action-card">
                         <div class="action-image" style="background: var(--gradient-blue);">
-                            <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
-                                <circle cx="15.99" cy="7" r="3" stroke="white" stroke-width="2"/>
-                                <rect x="2" y="7" width="19.99" height="10" stroke="white" stroke-width="2"/>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.9943 6.99756H21.9921V12.9954" stroke="white" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M21.9922 6.99756L13.4952 15.4945L8.49696 10.4963L1.99927 16.994" stroke="white" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
                         <div class="action-content">
@@ -169,10 +166,12 @@
                     </div>
                     <div class="action-card">
                         <div class="action-image" style="background: var(--gradient-purple);">
-                            <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
-                                <rect x="4" y="2" width="15.99" height="19.99" stroke="white" stroke-width="2"/>
-                                <path d="M8 9.17H8.01M8 13.33H8.01" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M6.67 9.17H6.67M6.67 13.33H6.67" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.99782 21.9922C5.46758 21.9922 4.95905 21.7815 4.58411 21.4066C4.20917 21.0317 3.99854 20.5231 3.99854 19.9929V3.99856C3.99854 3.46832 4.20917 2.95979 4.58411 2.58485C4.95905 2.20991 5.46758 1.99927 5.99782 1.99927H13.995C14.3114 1.99876 14.6248 2.06085 14.9172 2.18197C15.2095 2.3031 15.475 2.48086 15.6984 2.70502L19.2851 6.29175C19.5099 6.51517 19.6881 6.78092 19.8096 7.07363C19.9311 7.36634 19.9934 7.68022 19.9929 7.99714V19.9929C19.9929 20.5231 19.7822 21.0317 19.4073 21.4066C19.0323 21.7815 18.5238 21.9922 17.9936 21.9922H5.99782Z" stroke="white" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M13.9951 1.99927V6.99749C13.9951 7.26261 14.1004 7.51688 14.2879 7.70435C14.4754 7.89182 14.7296 7.99714 14.9948 7.99714H19.993" stroke="white" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9.99707 8.99683H7.99707" stroke="white" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15.9942 12.9954H7.99707" stroke="white" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15.9942 16.994H7.99707" stroke="white" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
                         <div class="action-content">
@@ -182,14 +181,14 @@
                     </div>
                     <div class="action-card">
                         <div class="action-image" style="background: var(--gradient-green);">
-                            <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
-                                <rect x="2" y="2" width="20" height="20" stroke="white" stroke-width="2"/>
-                                <path d="M8 16L12 12L16 16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.9943 6.99756H21.9921V12.9954" stroke="white" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M21.9922 6.99756L13.4952 15.4945L8.49696 10.4963L1.99927 16.994" stroke="white" stroke-width="1.99929" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
                         <div class="action-content">
-                            <h3 class="action-title">Generate Reports</h3>
-                            <p class="action-description">View analytics & reports</p>
+                            <h3 class="action-title">Activity Log</h3>
+                            <p class="action-description">View activity history</p>
                         </div>
                     </div>
                 </div>
@@ -236,12 +235,6 @@
                             <!-- Announcements will be dynamically loaded here -->
                             <div class="announcement-loading">Loading announcements...</div>
                         </div>
-                    </div>
-                    <!-- Need Help Card -->
-                    <div class="help-card">
-                        <h3 class="help-title">Need Help?</h3>
-                        <p class="help-description">Our support team is here to assist you 24/7</p>
-                        <a href="/support" class="help-button">Contact Support</a>
                     </div>
                 </div>
             </div>

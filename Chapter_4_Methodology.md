@@ -62,53 +62,477 @@ Iteration 6 (Analytics & Reporting): Focused on adding analytics and reporting c
 
 This incremental approach ensured continuous validation by end-users, delivering a high-quality product that systematically met the project's increasing complexity while maintaining flexibility to adapt to changing requirements. The following table outlines the specific plans designed to ensure the system's quality, security, and long-term viability upon deployment.
 
-Plan Type	Actual Plan	What to Assess During Testing
-
-Test Plan	Conduct Unit Testing for individual components (Netlify Functions), Integration Testing for API endpoints and database interactions, System Testing across web platforms, and User Acceptance Testing (UAT) with 3 neighborhood officials and 5 residents.	Functionality: Correctness of request submission, accuracy of status updates, proper role-based access control, JWT token validation, official assignment functionality, and activity logging. Performance: Request submission speed (sub-3 seconds), Netlify Function response times, and concurrent user stability. Usability: Ease of use for first-time resident users, administrative efficiency for officials, and mobile responsiveness across devices. Classification: Accuracy of rule-based keyword matching for text categorization and priority assignment.
-
-Security Plan	Enforce strong password hashing (bcrypt), implement JWT token-based authentication with secure storage, utilize input sanitization to prevent common web vulnerabilities (XSS, SQL injection), secure all user PII with encryption (at-rest), and implement Google OAuth security best practices.	Authentication: Successful enforcement of JWT token validation, Google Sign-In flow, and password policy. Vulnerability: Resistance to cross-site scripting (XSS), SQL injection, and unauthorized API access attempts. Data Privacy: Verification that PII is encrypted and inaccessible to unauthorized users, ensuring compliance with R.A. 10173. API Security: Rate limiting effectiveness and token expiration handling.
-
-Maintenance Plan	Establish a standardized bug reporting mechanism for neighborhood officials. Conduct quarterly system health checks and security updates. Maintain detailed documentation for adaptive and corrective maintenance. Monitor Netlify Function performance and database optimization.	Reliability: Success rate of daily automated data backups, Netlify Function uptime, and database performance. Stability: Monitoring error logs for recurring bugs, system crashes, or function timeouts. Adaptability: Time required to integrate a minor feature request (e.g., new report category) into the existing codebase. Scalability: Ability to handle increased load through serverless auto-scaling.
+| Plan Type | Actual Plan | What to Assess During Testing |
+|-----------|-------------|------------------------------|
+| **Test Plan** | Conduct Unit Testing for individual components (Netlify Functions), Integration Testing for API endpoints and database interactions, System Testing across web platforms, and User Acceptance Testing (UAT) with 3 neighborhood officials and 5 residents. | **Functionality:** Correctness of request submission, accuracy of status updates, proper role-based access control, JWT token validation, official assignment functionality, and activity logging. **Performance:** Request submission speed (sub-3 seconds), Netlify Function response times, and concurrent user stability. **Usability:** Ease of use for first-time resident users, administrative efficiency for officials, and mobile responsiveness across devices. **Classification:** Accuracy of rule-based keyword matching for text categorization and priority assignment. |
+| **Security Plan** | Enforce strong password hashing (bcrypt), implement JWT token-based authentication with secure storage, utilize input sanitization to prevent common web vulnerabilities (XSS, SQL injection), secure all user PII with encryption (at-rest), and implement Google OAuth security best practices. | **Authentication:** Successful enforcement of JWT token validation, Google Sign-In flow, and password policy. **Vulnerability:** Resistance to cross-site scripting (XSS), SQL injection, and unauthorized API access attempts. **Data Privacy:** Verification that PII is encrypted and inaccessible to unauthorized users, ensuring compliance with R.A. 10173. **API Security:** Rate limiting effectiveness and token expiration handling. |
+| **Maintenance Plan** | Establish a standardized bug reporting mechanism for neighborhood officials. Conduct quarterly system health checks and security updates. Maintain detailed documentation for adaptive and corrective maintenance. Monitor Netlify Function performance and database optimization. | **Reliability:** Success rate of daily automated data backups, Netlify Function uptime, and database performance. **Stability:** Monitoring error logs for recurring bugs, system crashes, or function timeouts. **Adaptability:** Time required to integrate a minor feature request (e.g., new report category) into the existing codebase. **Scalability:** Ability to handle increased load through serverless auto-scaling. |
 
 The detailed plans above are fundamental to ensuring the system's sustained operation and success. The Test Plan guarantees not only the technical functionality but also the practical usability of the system by its target audience, ensuring quick report times and administrative efficiency as desired in a smart system. The stringent Security Plan is designed to protect all stakeholders by implementing measures like JWT authentication, Google OAuth, and encryption, thereby adhering to legal requirements and ethical responsibilities regarding data privacy (Wolfert et al., 2017). Finally, the Maintenance Plan provides a structured framework for continuous system support, using a process for health checks and systematic bug fixing to ensure the Smart Neighborhood Maintenance System remains a reliable and up-to-date tool for local governance.
 
-GANTT CHART:
-[Note: The GANTT chart should reflect the Iterative Model with 6 iterations as outlined in the development lifecycle section above. Each iteration should be shown as a distinct phase with dependencies between iterations.]
+4.2.1 GANTT Chart
 
-PERT CHART:
+The GANTT chart below illustrates the project timeline from September 1 to November 18, 2024, showing the duration and dependencies of each development phase:
 
-Activity	Description	Duration (Days)	Predecessor	ES	EF	LS	LF
+| Activity | Description | Start Date | End Date | Duration (Days) | Dependencies |
+|----------|-------------|------------|----------|-----------------|--------------|
+| A | Requirements Analysis | Sep 1 | Sep 3 | 3 | - |
+| B | System Design & Architecture | Sep 4 | Sep 8 | 5 | A |
+| C | Iteration 1: Core Infrastructure | Sep 9 | Sep 18 | 10 | B |
+| D | Iteration 2: Resident Module | Sep 19 | Sep 28 | 10 | C |
+| E | Iteration 3: Admin Dashboard | Sep 29 | Oct 8 | 10 | D |
+| F | Iteration 4: Assignment & Logging | Oct 9 | Oct 18 | 10 | E |
+| G | Iteration 5: Google Sign-In & Enhancements | Oct 19 | Oct 28 | 10 | F |
+| H | Iteration 6: Analytics & Reporting | Oct 29 | Nov 7 | 10 | G |
+| I | Testing and Debugging | Nov 8 | Nov 15 | 8 | H |
+| J | Deployment and Presentation | Nov 16 | Nov 18 | 3 | I |
 
-A	Project Proposal & Planning	9	-	0	9	0	9
+**Total Project Duration: 79 days (September 1 - November 18, 2024)**
 
-B	Requirements Analysis	10	A	9	19	9	19
+4.2.2 PERT Chart
 
-C	System Design & Architecture	9	B	19	28	19	28
+The PERT (Program Evaluation and Review Technique) chart below shows the critical path analysis with Early Start (ES), Early Finish (EF), Late Start (LS), and Late Finish (LF) calculations:
 
-D	Iteration 1: Core Infrastructure	14	C	28	42	28	42
+| Activity | Description | Duration (Days) | Predecessor | ES | EF | LS | LF | Slack |
+|----------|-------------|-----------------|-------------|----|----|----|----|-------|
+| A | Requirements Analysis | 3 | - | 0 | 3 | 0 | 3 | 0 |
+| B | System Design & Architecture | 5 | A | 3 | 8 | 3 | 8 | 0 |
+| C | Iteration 1: Core Infrastructure | 10 | B | 8 | 18 | 8 | 18 | 0 |
+| D | Iteration 2: Resident Module | 10 | C | 18 | 28 | 18 | 28 | 0 |
+| E | Iteration 3: Admin Dashboard | 10 | D | 28 | 38 | 28 | 38 | 0 |
+| F | Iteration 4: Assignment & Logging | 10 | E | 38 | 48 | 38 | 48 | 0 |
+| G | Iteration 5: Google Sign-In & Enhancements | 10 | F | 48 | 58 | 48 | 58 | 0 |
+| H | Iteration 6: Analytics & Reporting | 10 | G | 58 | 68 | 58 | 68 | 0 |
+| I | Testing and Debugging | 8 | H | 68 | 76 | 68 | 76 | 0 |
+| J | Deployment and Presentation | 3 | I | 76 | 79 | 76 | 79 | 0 |
 
-E	Iteration 2: Resident Module	14	D	42	56	42	56
+**DURATION: 79 days**
+**CRITICAL PATH: A → B → C → D → E → F → G → H → I → J**
+**All activities are on the critical path (Slack = 0), meaning any delay in any activity will delay the entire project.**
 
-F	Iteration 3: Admin Dashboard	14	E	56	70	56	70
+4.2.3 Context Diagram
 
-G	Iteration 4: Assignment & Logging	14	F	70	84	70	84
+The Context Diagram represents the system as a single process in its environment, showing all external entities and data flows:
 
-H	Iteration 5: Google Sign-In & Enhancements	14	G	84	98	84	98
+```
+                    ┌─────────────────────────────────────┐
+                    │                                     │
+                    │  Smart Neighborhood Maintenance     │
+                    │  Request and Response System        │
+                    │                                     │
+                    └─────────────────────────────────────┘
+                              │
+        ┌──────────────────────┬───┼───┬──────────────────────┐
+        │                  │   │   │                        │
+        ▼                  ▼   ▼   ▼                        ▼
+   ┌─────────┐      ┌──────────────┐                  ┌─────────────┐
+   │Resident │      │   Official   │                  │   Google    │
+   │         │      │              │                  │  Sign-In    │
+   │         │      │              │                  │    API      │
+   └─────────┘      └──────────────┘                  └─────────────┘
+        │                  │                                  │
+        │                  │                                  │
+        │ Maintenance      │ Request                         │ OAuth
+        │ Requests         │ Management                       │ Tokens
+        │ Status Updates   │ Assignments                      │
+        │                  │ Activity Logs                    │
+        │                  │                                  │
+        ▼                  ▼                                  ▼
+   ┌──────────────────────────────────────────────────────────────┐
+   │                                                              │
+   │              Netlify Functions (Serverless Backend)          │
+   │                                                              │
+   └──────────────────────────────────────────────────────────────┘
+                              │
+                              │ Database Queries
+                              │ Data Storage
+                              │
+                              ▼
+                    ┌─────────────────────┐
+                    │                     │
+                    │  Supabase           │
+                    │  PostgreSQL         │
+                    │  Database          │
+                    │                     │
+                    └─────────────────────┘
+```
 
-I	Iteration 6: Analytics & Reporting	14	H	98	112	98	112
+**External Entities:**
+- **Resident**: Submits maintenance requests, views status updates
+- **Official**: Manages requests, updates status, assigns tasks, views activity logs
+- **Google Sign-In API**: Provides OAuth authentication
+- **Netlify Functions**: Serverless backend processing layer
+- **Supabase PostgreSQL Database**: Data storage and persistence
 
-J	Testing and Debugging	15	I	112	127	112	127
+**Data Flows:**
+- Maintenance requests, status updates (Resident ↔ System)
+- Request management, assignments, activity logs (Official ↔ System)
+- OAuth tokens, user authentication (Google Sign-In API ↔ System)
+- Database queries, data storage (System ↔ Supabase Database)
 
-K	Deployment and Presentation	10	J	127	137	127	137
+4.2.4 Data Flow Diagram (DFD) - Level 0
 
-DURATION: 137 days
-CRITICAL PATH: A,B,C,D,E,F,G,H,I,J,K
+The Data Flow Diagram illustrates the system's processes, data stores, and data flows:
 
-Context Diagram:
-[Note: The Context Diagram should show the system as the central process, with external entities including: Residents, Officials, Netlify Functions (serverless backend), Supabase PostgreSQL Database, Google Sign-In API, and Email Service. The diagram should illustrate data flows between these entities and the system.]
+```
+┌──────────┐
+│ Resident │
+└────┬─────┘
+     │
+     │ 1.0 User Authentication
+     │    (Login/Register/Google OAuth)
+     │
+     ▼
+┌─────────────────┐         ┌──────────────┐
+│  D1: Users      │         │  D2: Officials│
+└─────────────────┘         └──────────────┘
+     │
+     │ 2.0 Request Submission
+     │    (Text Classification, Photo Upload)
+     │
+     ▼
+┌──────────────────────────┐
+│  D3: Maintenance Requests │
+└──────────────────────────┘
+     │
+     │ 3.0 Request Management
+     │    (Status Updates, Priority, Assignment)
+     │
+     ▼
+┌──────────────────────────┐
+│  D4: Request Activity Log│
+└──────────────────────────┘
+     │
+     │ 4.0 Analytics & Reporting
+     │    (Statistics, Filtering, Visualization)
+     │
+     ▼
+┌──────────┐
+│ Official │
+└──────────┘
+```
 
-Data Flow Diagram:
-[Note: The Data Flow Diagram should reflect the serverless architecture with the following processes: (1) User Authentication (Resident/Official login, Google OAuth), (2) Request Submission (text classification, photo upload), (3) Request Management (status updates, priority assignment, official assignment), (4) Activity Logging, and (5) Analytics & Reporting. Data stores should include: Users, Officials, Maintenance Requests, Activity Logs, and Media Files. The diagram should show Netlify Functions as the processing layer between the frontend and Supabase database.]
+**Processes:**
+1. **User Authentication**: Handles resident registration, login (email/password), official login (username/password), and Google OAuth authentication
+2. **Request Submission**: Processes maintenance request submission, performs rule-based text classification, handles photo/media uploads, and stores requests in database
+3. **Request Management**: Manages status updates, priority assignment, official assignment, and updates request records
+4. **Activity Logging**: Records all official actions (status changes, priority updates, assignments) in activity log
+5. **Analytics & Reporting**: Generates statistics, provides filtering and sorting, and creates data visualizations
+
+**Data Stores:**
+- **D1: Users**: Stores resident account information (name, email, password, Google ID, picture)
+- **D2: Officials**: Stores official account information (username, password, name, department, position)
+- **D3: Maintenance Requests**: Stores all maintenance requests (title, description, location, category, status, priority, assigned_to, media_files)
+- **D4: Request Activity Log**: Stores all official actions on requests (action_type, old_value, new_value, description, timestamps)
+
+4.2.5 System Flowchart
+
+The System Flowchart illustrates the main processes and decision points in the system:
+
+```
+                    START
+                      │
+                      ▼
+            ┌─────────────────────┐
+            │  User Accesses      │
+            │  System             │
+            └──────────┬──────────┘
+                       │
+                       ▼
+            ┌─────────────────────┐
+            │  Login/Register?    │
+            └──────────┬──────────┘
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+        ▼              ▼              ▼
+   ┌────────┐   ┌──────────┐   ┌──────────┐
+   │Resident│   │ Official │   │  Google  │
+   │ Login  │   │  Login   │   │  Sign-In │
+   └───┬────┘   └────┬─────┘   └────┬─────┘
+       │             │              │
+       └─────────────┼──────────────┘
+                     │
+                     ▼
+            ┌─────────────────────┐
+            │  Authentication     │
+            │  Successful?        │
+            └──────────┬──────────┘
+                       │
+            ┌───────────┴───────────┐
+            │                       │
+            NO                      YES
+            │                       │
+            ▼                       ▼
+    ┌──────────────┐      ┌─────────────────┐
+    │ Display Error│      │  Check User     │
+    │ Return to    │      │  Role           │
+    │ Login        │      └────────┬─────────┘
+    └──────────────┘               │
+                            ┌───────┴────────┐
+                            │               │
+                            ▼               ▼
+                    ┌──────────────┐ ┌──────────────┐
+                    │   Resident   │ │   Official   │
+                    │   Dashboard  │ │   Dashboard  │
+                    └──────┬───────┘ └──────┬───────┘
+                           │                │
+                           ▼                ▼
+                    ┌──────────────┐ ┌──────────────┐
+                    │ Submit       │ │ View All     │
+                    │ Request      │ │ Requests     │
+                    └──────┬───────┘ └──────┬───────┘
+                           │                │
+                           ▼                ▼
+                    ┌──────────────┐ ┌──────────────┐
+                    │ Text         │ │ Update       │
+                    │ Classification│ │ Status/     │
+                    │ (Rule-based) │ │ Priority     │
+                    └──────┬───────┘ └──────┬───────┘
+                           │                │
+                           ▼                ▼
+                    ┌──────────────┐ ┌──────────────┐
+                    │ Store        │ │ Log Activity │
+                    │ Request      │ │ & Update     │
+                    │ in Database  │ │ Database     │
+                    └──────┬───────┘ └──────┬───────┘
+                           │                │
+                           └────────┬───────┘
+                                    │
+                                    ▼
+                            ┌──────────────┐
+                            │   END        │
+                            └──────────────┘
+```
+
+4.2.6 Entity Relationship Diagram (ERD)
+
+The Entity Relationship Diagram represents the database structure and relationships:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                         USERS                               │
+├─────────────────────────────────────────────────────────────┤
+│ PK │ id                    INT                              │
+│    │ name                  VARCHAR(255)                     │
+│    │ username              VARCHAR(255) UNIQUE NULL         │
+│    │ email                 VARCHAR(255) UNIQUE NOT NULL     │
+│    │ phone                 VARCHAR(20) NULL                 │
+│    │ password              VARCHAR(255) NULL                 │
+│    │ address               TEXT NULL                        │
+│    │ google_id             VARCHAR(255) UNIQUE NULL         │
+│    │ picture               VARCHAR(500) NULL                │
+│    │ is_official           TINYINT(1) DEFAULT 0            │
+│    │ created_at            TIMESTAMP                        │
+│    │ updated_at            TIMESTAMP                        │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            │ 1
+                            │
+                            │
+                            │ N
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  MAINTENANCE_REQUESTS                       │
+├─────────────────────────────────────────────────────────────┤
+│ PK │ id                    INT                              │
+│ FK │ user_id               INT NOT NULL                     │
+│ FK │ assigned_to           INT NULL                        │
+│    │ title                  VARCHAR(255) NOT NULL            │
+│    │ description            TEXT NOT NULL                    │
+│    │ location               VARCHAR(255) NOT NULL            │
+│    │ category               VARCHAR(100) DEFAULT 'general'   │
+│    │ status                 ENUM('pending','active',         │
+│    │                          'completed','cancelled')        │
+│    │ priority               ENUM('low','medium',             │
+│    │                          'high','urgent') DEFAULT       │
+│    │                          'medium'                       │
+│    │ media_files            JSONB DEFAULT '[]'              │
+│    │ assigned_at            TIMESTAMP NULL                   │
+│    │ created_at             TIMESTAMP                        │
+│    │ updated_at             TIMESTAMP                        │
+└─────────────────────────────────────────────────────────────┘
+         │                              │
+         │ N                            │ N
+         │                              │
+         │                              │
+         │                              │
+         │                              ▼
+         │                    ┌─────────────────────────────────┐
+         │                    │    REQUEST_ACTIVITY_LOG        │
+         │                    ├─────────────────────────────────┤
+         │                    │ PK │ id          INT            │
+         │                    │ FK │ request_id  INT NOT NULL   │
+         │                    │ FK │ official_id INT NULL      │
+         │                    │    │ action_type VARCHAR(50)    │
+         │                    │    │ old_value   VARCHAR(255)   │
+         │                    │    │ new_value   VARCHAR(255)   │
+         │                    │    │ description TEXT NULL      │
+         │                    │    │ created_at  TIMESTAMP      │
+         │                    └─────────────────────────────────┘
+         │                                    │
+         │                                    │ N
+         │                                    │
+         │                                    │
+         │                                    │ 1
+         │                                    │
+         │                                    ▼
+         │                    ┌─────────────────────────────────┐
+         │                    │         OFFICIALS              │
+         │                    ├─────────────────────────────────┤
+         │                    │ PK │ id          INT            │
+         │                    │    │ username    VARCHAR(255)    │
+         │                    │    │            UNIQUE NOT NULL │
+         │                    │    │ password    VARCHAR(255)    │
+         │                    │    │            NOT NULL        │
+         │                    │    │ name        VARCHAR(255)   │
+         │                    │    │            NOT NULL        │
+         │                    │    │ department  VARCHAR(255)   │
+         │                    │    │            NULL           │
+         │                    │    │ position    VARCHAR(255)   │
+         │                    │    │            NULL           │
+         │                    │    │ phone       VARCHAR(20)     │
+         │                    │    │            NULL           │
+         │                    │    │ email       VARCHAR(255)   │
+         │                    │    │            NULL           │
+         │                    │    │ is_active   TINYINT(1)     │
+         │                    │    │            DEFAULT 1      │
+         │                    │    │ created_at  TIMESTAMP     │
+         │                    │    │ updated_at  TIMESTAMP     │
+         │                    └─────────────────────────────────┘
+         │
+         │ Relationships:
+         │ - USERS (1) ────────< (N) MAINTENANCE_REQUESTS
+         │   (One user can submit many requests)
+         │
+         │ - OFFICIALS (1) ────< (N) MAINTENANCE_REQUESTS
+         │   (One official can be assigned many requests)
+         │
+         │ - MAINTENANCE_REQUESTS (1) ────< (N) REQUEST_ACTIVITY_LOG
+         │   (One request can have many activity log entries)
+         │
+         │ - OFFICIALS (1) ────< (N) REQUEST_ACTIVITY_LOG
+         │   (One official can perform many actions)
+         └─────────────────────────────────────────────────────┘
+```
+
+4.2.7 Database Normalization
+
+The database design follows the principles of database normalization to eliminate redundancy and ensure data integrity:
+
+**First Normal Form (1NF):**
+All tables satisfy 1NF as each column contains atomic values (no repeating groups or arrays, except for JSONB media_files which is acceptable in PostgreSQL for flexible data storage).
+
+**Second Normal Form (2NF):**
+All tables satisfy 2NF as they are in 1NF and all non-key attributes are fully functionally dependent on the primary key:
+- **users**: All attributes depend on `id` (primary key)
+- **officials**: All attributes depend on `id` (primary key)
+- **maintenance_requests**: All attributes depend on `id` (primary key), with foreign keys `user_id` and `assigned_to` referencing other tables
+- **request_activity_log**: All attributes depend on `id` (primary key), with foreign keys `request_id` and `official_id` referencing other tables
+
+**Third Normal Form (3NF):**
+All tables satisfy 3NF as they are in 2NF and there are no transitive dependencies (non-key attributes do not depend on other non-key attributes):
+- **users**: No transitive dependencies (e.g., `email` does not determine `name`)
+- **officials**: No transitive dependencies (e.g., `department` does not determine `position`)
+- **maintenance_requests**: No transitive dependencies
+- **request_activity_log**: No transitive dependencies
+
+**Normalization Summary:**
+
+| Table | 1NF | 2NF | 3NF | Notes |
+|-------|-----|-----|-----|-------|
+| users | ✓ | ✓ | ✓ | Fully normalized |
+| officials | ✓ | ✓ | ✓ | Fully normalized |
+| maintenance_requests | ✓ | ✓ | ✓ | Fully normalized; JSONB media_files is acceptable for flexible storage |
+| request_activity_log | ✓ | ✓ | ✓ | Fully normalized |
+
+**Foreign Key Relationships:**
+- `maintenance_requests.user_id` → `users.id` (ON DELETE CASCADE)
+- `maintenance_requests.assigned_to` → `officials.id` (ON DELETE SET NULL)
+- `request_activity_log.request_id` → `maintenance_requests.id` (ON DELETE CASCADE)
+- `request_activity_log.official_id` → `officials.id` (ON DELETE SET NULL)
+
+**Indexes for Performance:**
+- `users`: `idx_email`, `idx_google_id`
+- `officials`: `idx_username`, `idx_is_active`
+- `maintenance_requests`: `idx_user_id`, `idx_status`, `idx_priority`, `idx_assigned_to`, `idx_media_files` (GIN index for JSONB)
+- `request_activity_log`: `idx_request_id`, `idx_official_id`, `idx_action_type`, `idx_created_at`
+
+4.2.8 Use Case Diagram
+
+The Use Case Diagram illustrates the interactions between actors and the system:
+
+```
+                    ┌──────────────────────────────────────┐
+                    │                                      │
+                    │  Smart Neighborhood Maintenance      │
+                    │  Request and Response System        │
+                    │                                      │
+                    │  ┌──────────────────────────────┐  │
+                    │  │ Register Account              │  │
+                    │  │ Login (Email/Password)         │  │
+                    │  │ Login (Google Sign-In)         │  │
+                    │  │ Submit Maintenance Request     │  │
+                    │  │ Upload Photos/Media            │  │
+                    │  │ View My Requests               │  │
+                    │  │ Track Request Status           │  │
+                    │  │ Update Profile                 │  │
+                    │  └──────────────────────────────┘  │
+                    │                                      │
+                    │  ┌──────────────────────────────┐  │
+                    │  │ Login (Username/Password)      │  │
+                    │  │ View All Requests              │  │
+                    │  │ Update Request Status          │  │
+                    │  │ Set Request Priority           │  │
+                    │  │ Assign Request to Official     │  │
+                    │  │ View Activity Logs             │  │
+                    │  │ Generate Reports               │  │
+                    │  │ View Analytics Dashboard        │  │
+                    │  │ Filter and Sort Requests       │  │
+                    │  └──────────────────────────────┘  │
+                    │                                      │
+                    └──────────────────────────────────────┘
+                              ▲                    ▲
+                              │                    │
+                              │                    │
+                    ┌─────────┘                    └─────────┐
+                    │                                        │
+                    │                                        │
+            ┌───────┴────────┐                    ┌─────────┴────────┐
+            │                │                    │                  │
+            │   Resident     │                    │    Official      │
+            │                │                    │                  │
+            └────────────────┘                    └──────────────────┘
+```
+
+**Actors:**
+1. **Resident**: Community members who submit maintenance requests
+2. **Official**: Government staff who manage and process requests
+
+**Resident Use Cases:**
+- Register Account (email/password or Google Sign-In)
+- Login (Email/Password or Google Sign-In)
+- Submit Maintenance Request
+- Upload Photos/Media
+- View My Requests
+- Track Request Status
+- Update Profile
+
+**Official Use Cases:**
+- Login (Username/Password)
+- View All Requests
+- Update Request Status
+- Set Request Priority
+- Assign Request to Official
+- View Activity Logs
+- Generate Reports
+- View Analytics Dashboard
+- Filter and Sort Requests
+
+**System Use Cases (Automated):**
+- Automated Text Classification (Rule-based keyword matching)
+- Activity Logging (Automatic tracking of official actions)
+- Email Notifications (Status updates to residents)
 
 4.3 Description of the Prototype
 

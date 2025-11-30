@@ -573,13 +573,6 @@
                     </svg>
                     <span class="nav-text">Activity Log</span>
                 </a>
-                <a href="/settings/official" class="nav-button">
-                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <path d="M2.54 1.68L17.47 1.68C17.47 1.68 17.47 1.68 17.47 1.68" stroke="currentColor" stroke-width="1.67"/>
-                        <circle cx="7.5" cy="7.5" r="5" stroke="currentColor" stroke-width="1.67"/>
-                    </svg>
-                    <span class="nav-text">Settings</span>
-                </a>
             </nav>
 
             <div class="sidebar-footer">

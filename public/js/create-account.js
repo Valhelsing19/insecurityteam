@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
       google.accounts.id.renderButton(googleSignupBtn, {
         theme: 'outline',
         size: 'large',
-        width: '100%',
+        // width removed - Google auto-sizes based on container
         text: 'signup_with',
         type: 'standard'
       });

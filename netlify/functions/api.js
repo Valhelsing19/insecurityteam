@@ -375,12 +375,12 @@ exports.handler = async (event, context) => {
         if (userIds.length > 0) {
           const { data: users, error: usersError } = await supabase
             .from('users')
-            .select('id, name, email')
+            .select('id, name, email, picture')
             .in('id', userIds);
 
           if (!usersError && users) {
             usersMap = users.reduce((acc, u) => {
-              acc[u.id] = { name: u.name, email: u.email };
+              acc[u.id] = { name: u.name, email: u.email, picture: u.picture };
               return acc;
             }, {});
           }
@@ -411,6 +411,7 @@ exports.handler = async (event, context) => {
             ...req,
             user_name: userInfo?.name || null,
             user_email: userInfo?.email || null,
+            user_picture: userInfo?.picture || null,
             assigned_official: officialInfo ? {
               name: officialInfo.name,
               department: officialInfo.department
@@ -1211,6 +1212,210 @@ exports.handler = async (event, context) => {
           }
         })
       };
+    }
+
+    // Upload profile picture
+    if (path === '/user/profile-picture' && method === 'POST') {
+      const contentType = event.headers['content-type'] || event.headers['Content-Type'] || '';
+      const isMultipart = contentType.includes('multipart/form-data');
+
+      if (!isMultipart) {
+        return {
+          statusCode: 400,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ error: 'Request must be multipart/form-data' })
+        };
+      }
+
+      return new Promise((resolve) => {
+        const Busboy = require('busboy');
+        const busboy = Busboy({ headers: event.headers });
+        let profilePictureFile = null;
+
+        busboy.on('file', (fieldname, file, info) => {
+          if (fieldname === 'profile_picture') {
+            const chunks = [];
+            file.on('data', (chunk) => {
+              chunks.push(chunk);
+            });
+            file.on('end', () => {
+              profilePictureFile = {
+                buffer: Buffer.concat(chunks),
+                filename: info.filename,
+                mimeType: info.mimeType
+              };
+            });
+          } else {
+            file.resume(); // Ignore other fields
+          }
+        });
+
+        busboy.on('finish', async () => {
+          try {
+            // Validate user.id exists
+            if (!user || !user.id) {
+              console.error('User authentication failed - user.id is missing');
+              return resolve({
+                statusCode: 401,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ error: 'User authentication failed. Please log in again.' })
+              });
+            }
+
+            if (!profilePictureFile) {
+              return resolve({
+                statusCode: 400,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ error: 'No profile picture file provided' })
+              });
+            }
+
+            // Validate file was actually received
+            if (!profilePictureFile.buffer || profilePictureFile.buffer.length === 0) {
+              return resolve({
+                statusCode: 400,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ error: 'Profile picture file is empty or corrupted' })
+              });
+            }
+
+            // Generate unique filename
+            const timestamp = Date.now();
+            const randomStr = Math.random().toString(36).substring(2, 15);
+            const fileExt = profilePictureFile.filename.split('.').pop() || 'jpg';
+            const fileName = `${user.id}/profile-${timestamp}-${randomStr}.${fileExt}`;
+
+            console.log('Uploading profile picture for user:', user.id);
+            console.log('File size:', profilePictureFile.buffer.length, 'bytes');
+            console.log('File type:', profilePictureFile.mimeType);
+            console.log('Target filename:', fileName);
+
+            // Upload to Supabase Storage
+            const { data: uploadData, error: uploadError } = await supabase.storage
+              .from('profile-pictures')
+              .upload(fileName, profilePictureFile.buffer, {
+                contentType: profilePictureFile.mimeType,
+                upsert: true // Allow overwriting existing profile pictures
+              });
+
+            if (uploadError) {
+              console.error('Error uploading profile picture:', uploadError);
+              console.error('Upload error details:', JSON.stringify(uploadError, null, 2));
+
+              // More specific error messages based on error type
+              let errorMessage = 'Failed to upload profile picture';
+              if (uploadError.message) {
+                const errorMsg = uploadError.message.toLowerCase();
+                if (errorMsg.includes('bucket not found') || errorMsg.includes('does not exist')) {
+                  errorMessage = 'Profile pictures storage bucket not found. Please create the "profile-pictures" bucket in Supabase Storage. See PROFILE_PICTURE_SETUP.md for instructions.';
+                } else if (errorMsg.includes('row-level security') || errorMsg.includes('policy')) {
+                  errorMessage = 'Storage policy error. Please check Supabase Storage policies for the "profile-pictures" bucket. Make sure "Authenticated Upload" policy is set up.';
+                } else if (errorMsg.includes('jwt') || errorMsg.includes('unauthorized')) {
+                  errorMessage = 'Authentication error. Please check Supabase configuration and ensure SUPABASE_SERVICE_ROLE_KEY is set correctly.';
+                } else if (errorMsg.includes('duplicate') || errorMsg.includes('already exists')) {
+                  // This shouldn't happen with upsert: true, but handle it anyway
+                  errorMessage = 'File already exists. Trying to overwrite...';
+                  // Continue to get URL and update database
+                } else {
+                  errorMessage = `Failed to upload profile picture: ${uploadError.message}`;
+                }
+              }
+
+              // Only return error if it's not a duplicate (which we'll handle)
+              if (!uploadError.message || !uploadError.message.toLowerCase().includes('duplicate')) {
+                return resolve({
+                  statusCode: 500,
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    error: errorMessage,
+                    details: process.env.NODE_ENV === 'development' ? uploadError.message : undefined
+                  })
+                });
+              }
+            }
+
+            console.log('Profile picture uploaded successfully:', uploadData);
+
+            // Get public URL
+            const urlResponse = supabase.storage
+              .from('profile-pictures')
+              .getPublicUrl(fileName);
+
+            const publicUrl = urlResponse?.data?.publicUrl || urlResponse?.publicUrl || urlResponse?.data || '';
+
+            if (!publicUrl) {
+              console.error('Failed to get public URL for profile picture');
+              return resolve({
+                statusCode: 500,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ error: 'Failed to get profile picture URL' })
+              });
+            }
+
+            console.log('Profile picture public URL:', publicUrl);
+
+            // Update user's picture in database
+            const { data: updatedUser, error: updateError } = await supabase
+              .from('users')
+              .update({ picture: publicUrl })
+              .eq('id', user.id)
+              .select()
+              .single();
+
+            if (updateError) {
+              console.error('Error updating user picture:', updateError);
+              return resolve({
+                statusCode: 500,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ error: 'Failed to update profile picture in database', details: updateError.message })
+              });
+            }
+
+            console.log('Profile picture updated in database successfully');
+
+            return resolve({
+              statusCode: 200,
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                success: true,
+                message: 'Profile picture uploaded successfully',
+                picture_url: publicUrl
+              })
+            });
+          } catch (error) {
+            console.error('Error processing profile picture upload:', error);
+            console.error('Error stack:', error.stack);
+            return resolve({
+              statusCode: 500,
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                error: 'Error processing profile picture upload',
+                details: process.env.NODE_ENV === 'development' ? error.message : 'Please check server logs for details'
+              })
+            });
+          }
+        });
+
+        busboy.on('error', (err) => {
+          console.error('Busboy error:', err);
+          resolve({
+            statusCode: 400,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ error: 'Error parsing multipart data', details: err.message })
+          });
+        });
+
+        // Parse the body
+        if (event.isBase64Encoded) {
+          busboy.end(Buffer.from(event.body, 'base64'));
+        } else {
+          if (typeof event.body === 'string') {
+            busboy.end(Buffer.from(event.body, 'binary'));
+          } else {
+            busboy.end(event.body);
+          }
+        }
+      });
     }
 
     return {

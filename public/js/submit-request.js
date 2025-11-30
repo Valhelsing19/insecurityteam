@@ -2,6 +2,18 @@ console.log('=== submit-request.js LOADED ===');
 // File upload preview - Multiple Images and Videos
 document.addEventListener('DOMContentLoaded', function() {
     console.log('=== DOM Content Loaded ===');
+    
+    // Logout handler
+    const logoutBtn = document.querySelector('.logout-button');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+            // Clear authentication data
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_data');
+            // Redirect to login page
+            window.location.href = '/login';
+        });
+    }
     // Image upload handler - Multiple files
     const imageInput = document.getElementById('photo');
     const imageUpload = imageInput ? imageInput.closest('.file-upload') : null;

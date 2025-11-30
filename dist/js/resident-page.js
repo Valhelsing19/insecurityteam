@@ -1,7 +1,7 @@
 // Resident Page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     const token = localStorage.getItem('auth_token');
-    
+
     // Check authentication
     if (!token) {
         window.location.href = '/login';
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get user data
     const userData = localStorage.getItem('user_data');
     const user = userData ? JSON.parse(userData) : null;
-    
+
     // Extract first name from user name
     function getFirstName(fullName) {
         if (!fullName) return 'Resident';
@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateWelcomeMessage(hasRequests) {
         const welcomeBadge = document.querySelector('.welcome-badge');
         const residentBadge = document.querySelectorAll('.welcome-badge')[1];
-        
+
         if (welcomeBadge) {
             welcomeBadge.textContent = hasRequests ? 'Welcome Back' : 'Welcome';
         }
-        
+
         if (residentBadge && user) {
             const firstName = getFirstName(user.name);
             residentBadge.textContent = firstName;
@@ -38,9 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function showOnboardingMessage() {
         const onboardingContainer = document.getElementById('onboarding-message');
         if (!onboardingContainer) return;
-        
+
         onboardingContainer.style.display = 'block';
-        
+
         // Auto-hide after 10 seconds
         setTimeout(() => {
             if (onboardingContainer) {
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const data = await response.json();
             console.log('Dashboard data received:', data);
-            
+
             if (data) {
                 const requests = data.requests || [];
                 // Check if CURRENT USER has any requests (not all users)
@@ -88,15 +88,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Check both user_id field and nested users object
                     return (r.user_id === user.id) || (r.users && r.users.id === user.id);
                 });
-                
+
                 // Update welcome message based on whether current user has requests
                 updateWelcomeMessage(hasRequests);
-                
+
                 // Show onboarding for new users
                 if (!hasRequests) {
                     showOnboardingMessage();
                 }
-                
+
                 // Update statistics - handle both direct stats and calculated stats
                 if (data.stats) {
                     updateStatistics(data.stats);
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // No data available
                     updateStatistics({ total: 0, pending: 0, active: 0, completed: 0 });
                 }
-                
+
                 updateRecentActivity(requests);
             } else {
                 console.warn('No data in response');
@@ -177,13 +177,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Store data for auto-refresh
         window.lastActivityData = requests;
-        
+
         activityList.innerHTML = recentRequests.map(req => {
             const timeAgo = getTimeAgo(req.created_at);
             const statusColor = getStatusColor(req.status);
             const statusIcon = getStatusIcon(req.status);
             const categoryName = getCategoryDisplayName(req.category);
-            
+
             return `
                 <div class="activity-item">
                     <div class="activity-avatar ${statusColor}">
@@ -225,17 +225,17 @@ document.addEventListener('DOMContentLoaded', function() {
             let utcString = dateString;
             if (dateString.includes('T')) {
                 // Check if it already has timezone info
-                const hasTimezone = dateString.endsWith('Z') || 
+                const hasTimezone = dateString.endsWith('Z') ||
                                    dateString.match(/[+-]\d{2}:\d{2}$/) ||
                                    dateString.match(/[+-]\d{4}$/);
-                
+
                 if (!hasTimezone) {
                     // No timezone specified - Supabase timestamps are in UTC, so append 'Z'
                     utcString = dateString + 'Z';
                 }
             }
             date = new Date(utcString);
-            
+
             // If the date is invalid, return 'Just now'
             if (isNaN(date.getTime())) {
                 console.error('Invalid date:', dateString, 'Parsed as:', utcString);
@@ -244,15 +244,15 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             return 'Just now';
         }
-        
+
         const now = new Date();
         const diffMs = now.getTime() - date.getTime();
-        
+
         // Handle negative differences (future dates) - should show "Just now"
         if (diffMs < 0) {
             return 'Just now';
         }
-        
+
         const diffSecs = Math.floor(diffMs / 1000);
         const diffMins = Math.floor(diffMs / 60000);
         const diffHours = Math.floor(diffMs / 3600000);
@@ -262,26 +262,26 @@ document.addEventListener('DOMContentLoaded', function() {
         if (diffSecs < 60) {
             return diffSecs <= 0 ? 'Just now' : `${diffSecs} ${diffSecs === 1 ? 'second' : 'seconds'} ago`;
         }
-        
+
         // Show exact minutes (less than 1 hour)
         if (diffMins < 60) {
             return `${diffMins} ${diffMins === 1 ? 'minute' : 'minutes'} ago`;
         }
-        
+
         // Show exact hours (less than 24 hours)
         if (diffHours < 24) {
             return `${diffHours} ${diffHours === 1 ? 'hour' : 'hours'} ago`;
         }
-        
+
         // Show exact days (less than 7 days)
         if (diffDays < 7) {
             return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`;
         }
-        
+
         // For older dates, show the actual date
-        return date.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'short', 
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
             day: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
@@ -301,11 +301,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function getStatusIcon(status) {
         const statusLower = (status || '').toLowerCase();
         if (statusLower === 'completed') {
-            return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1.67" y="1.67" width="16.67" height="16.67" stroke="#00A63E" stroke-width="1.67"/><path d="M7.5 8.33L9.17 10L12.5 6.67" stroke="#00A63E" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+            return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_completed)"><path d="M9.99996 18.3334C14.6023 18.3334 18.3333 14.6025 18.3333 10.0001C18.3333 5.39771 14.6023 1.66675 9.99996 1.66675C5.39759 1.66675 1.66663 5.39771 1.66663 10.0001C1.66663 14.6025 5.39759 18.3334 9.99996 18.3334Z" stroke="#00A63E" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 9.99992L9.16667 11.6666L12.5 8.33325" stroke="#00A63E" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_completed"><rect width="20" height="20" fill="white"/></clipPath></defs></svg>';
         } else if (statusLower === 'active' || statusLower === 'in-progress') {
-            return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 5L10 1.67L10 5" stroke="#155DFC" stroke-width="1.67" stroke-linecap="round"/><path d="M10 5L10 16.67L10 5" stroke="#155DFC" stroke-width="1.67" stroke-linecap="round"/></svg>';
+            return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 5V10L13.3333 11.6667" stroke="#155DFC" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.99996 18.3334C14.6023 18.3334 18.3333 14.6025 18.3333 10.0001C18.3333 5.39771 14.6023 1.66675 9.99996 1.66675C5.39759 1.66675 1.66663 5.39771 1.66663 10.0001C1.66663 14.6025 5.39759 18.3334 9.99996 18.3334Z" stroke="#155DFC" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         } else {
-            return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M1.65 2.49L16.68 15.01" stroke="#E17100" stroke-width="1.67" stroke-linecap="round"/><path d="M10 7.5L10 0L10 7.5" stroke="#E17100" stroke-width="1.67" stroke-linecap="round"/><path d="M10 14.17L10 10L10 14.17" stroke="#E17100" stroke-width="1.67" stroke-linecap="round"/></svg>';
+            return '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.1083 14.9999L11.4416 3.33319C11.2962 3.0767 11.0854 2.86335 10.8307 2.71492C10.576 2.56649 10.2864 2.48828 9.99161 2.48828C9.69678 2.48828 9.40724 2.56649 9.1525 2.71492C8.89777 2.86335 8.68697 3.0767 8.54161 3.33319L1.87494 14.9999C1.72801 15.2543 1.65096 15.5431 1.65162 15.837C1.65227 16.1308 1.73059 16.4192 1.87865 16.673C2.0267 16.9269 2.23923 17.137 2.49469 17.2822C2.75014 17.4274 3.03945 17.5025 3.33327 17.4999H16.6666C16.959 17.4996 17.2462 17.4223 17.4993 17.2759C17.7525 17.1295 17.9626 16.9191 18.1087 16.6658C18.2548 16.4125 18.3316 16.1252 18.3316 15.8328C18.3315 15.5404 18.2545 15.2531 18.1083 14.9999Z" stroke="#E17100" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 7.5V10.8333" stroke="#E17100" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14.1667H10.0083" stroke="#E17100" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         }
     }
 
@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Make quick action cards functional
     function setupQuickActions() {
         const actionCards = document.querySelectorAll('.action-card');
-        
+
         actionCards.forEach((card, index) => {
             card.style.cursor = 'pointer';
             card.addEventListener('click', function() {
@@ -351,13 +351,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         break;
                 }
             });
-            
+
             // Add hover effect
             card.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-2px)';
                 this.style.transition = 'transform 0.2s ease';
             });
-            
+
             card.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0)';
             });
@@ -431,23 +431,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Store announcements in a global variable for modal access and auto-refresh
         window.announcementsData = announcements;
-        
+
         announcementsList.innerHTML = announcements.map((announcement, index) => {
             const timeAgo = getTimeAgo(announcement.created_at);
-            const colorClass = announcement.type === 'user_request' ? 'blue' : 
-                             announcement.status === 'completed' ? 'green' : 
+            const colorClass = announcement.type === 'user_request' ? 'blue' :
+                             announcement.status === 'completed' ? 'green' :
                              announcement.status === 'active' ? 'purple' : 'orange';
-            
+
             // Keep description short (max 60 chars)
-            const shortDescription = announcement.description.length > 60 
-                ? announcement.description.substring(0, 60) + '...' 
+            const shortDescription = announcement.description.length > 60
+                ? announcement.description.substring(0, 60) + '...'
                 : announcement.description;
-            
+
             // Get first image for thumbnail (if available)
             const mediaFiles = announcement.media_files || [];
             const firstImage = mediaFiles.find(m => m.type === 'image');
             const hasMedia = mediaFiles.length > 0;
-            
+
             return `
                 <div class="announcement-item ${colorClass}" data-announcement-index="${index}">
                     ${firstImage ? `
@@ -494,7 +494,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         }).join('');
-        
+
         // Add click event listeners to announcement items
         announcementsList.querySelectorAll('.announcement-item').forEach((item, index) => {
             item.addEventListener('click', function() {
@@ -511,18 +511,18 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set modal content
         document.getElementById('modal-title').textContent = announcement.title;
         document.getElementById('modal-description').textContent = announcement.description || 'No description available';
-        
+
         // Format date and time
         const date = new Date(announcement.created_at);
-        const formattedDate = date.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+        const formattedDate = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         });
-        const formattedTime = date.toLocaleTimeString('en-US', { 
-            hour: '2-digit', 
+        const formattedTime = date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
             minute: '2-digit',
-            hour12: true 
+            hour12: true
         });
         document.getElementById('modal-time').textContent = `${formattedDate} at ${formattedTime}`;
 
@@ -539,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set details
         const details = document.getElementById('modal-details');
         let detailsHtml = '';
-        
+
         if (announcement.location) {
             detailsHtml += `
                 <div class="modal-detail-item">
@@ -547,7 +547,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         }
-        
+
         if (announcement.category) {
             detailsHtml += `
                 <div class="modal-detail-item">
@@ -555,7 +555,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         }
-        
+
         if (announcement.status) {
             detailsHtml += `
                 <div class="modal-detail-item">
@@ -563,7 +563,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         }
-        
+
         if (announcement.action_type) {
             detailsHtml += `
                 <div class="modal-detail-item">
@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         }
-        
+
         if (announcement.old_value && announcement.new_value) {
             detailsHtml += `
                 <div class="modal-detail-item">
@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         }
-        
+
         if (announcement.department) {
             detailsHtml += `
                 <div class="modal-detail-item">
@@ -589,14 +589,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         details.innerHTML = detailsHtml || '<p>No additional details available</p>';
-        
+
         // Display media files in modal
         const mediaContainer = document.getElementById('modal-media');
         if (mediaContainer) {
             const mediaFiles = announcement.media_files || [];
             if (mediaFiles.length > 0) {
                 let mediaHtml = '<h3 class="modal-section-title">Media Files</h3><div class="modal-media-grid">';
-                
+
                 mediaFiles.forEach((media, index) => {
                     if (media.type === 'image') {
                         mediaHtml += `
@@ -615,7 +615,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         `;
                     }
                 });
-                
+
                 mediaHtml += '</div>';
                 mediaContainer.innerHTML = mediaHtml;
                 mediaContainer.style.display = 'block';

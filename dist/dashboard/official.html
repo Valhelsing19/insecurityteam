@@ -51,14 +51,7 @@
                         <rect x="3.33" y="1.67" width="13.33" height="16.67" stroke="currentColor" stroke-width="1.67"/>
                         <path d="M6.67 9.17H6.67M6.67 13.33H6.67" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
                     </svg>
-                    <span class="nav-text">Reports</span>
-                </a>
-                <a href="/settings/official" class="nav-button">
-                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <circle cx="10" cy="10" r="5" stroke="currentColor" stroke-width="1.67"/>
-                        <path d="M10 2.54V5M10 15V17.46M17.46 10H15M5 10H2.54" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
-                    </svg>
-                    <span class="nav-text">Settings</span>
+                    <span class="nav-text">Activity Log</span>
                 </a>
             </nav>
 

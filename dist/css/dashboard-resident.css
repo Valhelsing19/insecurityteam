@@ -253,9 +253,9 @@ body {
 }
 
 .stat-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
+    width: 55.98px;
+    height: 55.98px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -264,19 +264,24 @@ body {
 }
 
 .stat-icon.blue {
-    background: var(--gradient-blue);
+    background: transparent;
 }
 
 .stat-icon.orange {
-    background: var(--gradient-orange);
+    background: transparent;
 }
 
 .stat-icon.purple {
-    background: var(--gradient-purple);
+    background: transparent;
 }
 
 .stat-icon.green {
-    background: var(--gradient-green);
+    background: transparent;
+}
+
+.stat-icon svg {
+    width: 24px;
+    height: 24px;
 }
 
 /* Charts Section */

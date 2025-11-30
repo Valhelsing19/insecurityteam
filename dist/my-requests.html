@@ -31,9 +31,11 @@
 
             <nav class="navigation">
                 <a href="/dashboard" class="nav-button">
-                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <rect x="2.5" y="2.5" width="15" height="15" stroke="currentColor" stroke-width="1.67"/>
-                        <path d="M7.5 10H12.5M7.5 7.5H12.5M7.5 12.5H12.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.5 2.5V15.8333C2.5 16.2754 2.67559 16.6993 2.98816 17.0118C3.30072 17.3244 3.72464 17.5 4.16667 17.5H17.5" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15 14.1667V7.5" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.8335 14.1666V4.16663" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.6665 14.1666V11.6666" stroke="#364153" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span class="nav-text">Home</span>
                 </a>
@@ -45,10 +47,13 @@
                     <span class="nav-text">Submit Request</span>
                 </a>
                 <a href="/my-requests" class="nav-button active">
-                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <path d="M3.33 6.67H6.67M3.33 10H6.67M3.33 13.33H6.67" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
-                        <path d="M6.67 1.67H13.33V18.33H6.67V1.67Z" stroke="currentColor" stroke-width="1.67"/>
-                        <path d="M10 6.67H13.33M10 10H13.33M10 13.33H13.33" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.4998 1.66663H7.49984C7.0396 1.66663 6.6665 2.03972 6.6665 2.49996V4.16663C6.6665 4.62686 7.0396 4.99996 7.49984 4.99996H12.4998C12.9601 4.99996 13.3332 4.62686 13.3332 4.16663V2.49996C13.3332 2.03972 12.9601 1.66663 12.4998 1.66663Z" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M13.3335 3.33337H15.0002C15.4422 3.33337 15.8661 3.50897 16.1787 3.82153C16.4912 4.13409 16.6668 4.55801 16.6668 5.00004V16.6667C16.6668 17.1087 16.4912 17.5327 16.1787 17.8452C15.8661 18.1578 15.4422 18.3334 15.0002 18.3334H5.00016C4.55814 18.3334 4.13421 18.1578 3.82165 17.8452C3.50909 17.5327 3.3335 17.1087 3.3335 16.6667V5.00004C3.3335 4.55801 3.50909 4.13409 3.82165 3.82153C4.13421 3.50897 4.55814 3.33337 5.00016 3.33337H6.66683" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 9.16663H13.3333" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 13.3334H13.3333" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.6665 9.16663H6.67484" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.6665 13.3334H6.67484" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span class="nav-text">My Requests</span>
                 </a>
@@ -97,9 +102,17 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon pending">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <circle cx="10" cy="10" r="8" stroke="#E17100" stroke-width="1.67"/>
-                            <path d="M10 4V10L13 13" stroke="#E17100" stroke-width="1.67" stroke-linecap="round"/>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_4_5181)">
+                                <path d="M18.1085 15L11.4419 3.33332C11.2965 3.07682 11.0857 2.86347 10.831 2.71504C10.5762 2.56661 10.2867 2.4884 9.99185 2.4884C9.69703 2.4884 9.40748 2.56661 9.15275 2.71504C8.89802 2.86347 8.68722 3.07682 8.54185 3.33332L1.87519 15C1.72825 15.2544 1.65121 15.5432 1.65186 15.8371C1.65251 16.1309 1.73083 16.4194 1.87889 16.6732C2.02695 16.927 2.23948 17.1371 2.49493 17.2823C2.75039 17.4275 3.03969 17.5026 3.33352 17.5H16.6669C16.9593 17.4997 17.2465 17.4225 17.4996 17.2761C17.7527 17.1297 17.9629 16.9192 18.1089 16.6659C18.255 16.4126 18.3319 16.1253 18.3318 15.8329C18.3317 15.5405 18.2547 15.2532 18.1085 15Z" stroke="#E17100" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 7.5V10.8333" stroke="#E17100" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 14.1666H10.0083" stroke="#E17100" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_4_5181">
+                                    <rect width="20" height="20" fill="white"/>
+                                </clipPath>
+                            </defs>
                         </svg>
                     </div>
                     <div class="stat-content">
@@ -110,9 +123,16 @@
 
                 <div class="stat-card">
                     <div class="stat-icon in-progress">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M10 5V10L13 13" stroke="#155DFC" stroke-width="1.67" stroke-linecap="round"/>
-                            <circle cx="10" cy="10" r="8" stroke="#155DFC" stroke-width="1.67"/>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_4_5193)">
+                                <path d="M10 5V10L13.3333 11.6667" stroke="#155DFC" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9.99984 18.3333C14.6022 18.3333 18.3332 14.6023 18.3332 9.99996C18.3332 5.39759 14.6022 1.66663 9.99984 1.66663C5.39746 1.66663 1.6665 5.39759 1.6665 9.99996C1.6665 14.6023 5.39746 18.3333 9.99984 18.3333Z" stroke="#155DFC" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_4_5193">
+                                    <rect width="20" height="20" fill="white"/>
+                                </clipPath>
+                            </defs>
                         </svg>
                     </div>
                     <div class="stat-content">
@@ -123,9 +143,16 @@
 
                 <div class="stat-card">
                     <div class="stat-icon completed">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M5 10L8 13L15 6" stroke="#00A63E" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
-                            <circle cx="10" cy="10" r="8" stroke="#00A63E" stroke-width="1.67"/>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_4_5204)">
+                                <path d="M9.99984 18.3333C14.6022 18.3333 18.3332 14.6023 18.3332 9.99996C18.3332 5.39759 14.6022 1.66663 9.99984 1.66663C5.39746 1.66663 1.6665 5.39759 1.6665 9.99996C1.6665 14.6023 5.39746 18.3333 9.99984 18.3333Z" stroke="#00A63E" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7.5 10L9.16667 11.6667L12.5 8.33337" stroke="#00A63E" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_4_5204">
+                                    <rect width="20" height="20" fill="white"/>
+                                </clipPath>
+                            </defs>
                         </svg>
                     </div>
                     <div class="stat-content">

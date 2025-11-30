@@ -536,6 +536,23 @@
             font-size: 14px;
             font-weight: 400;
             flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resident-avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .resident-avatar-initials {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .resident-name {
@@ -715,6 +732,296 @@
             padding: 40px;
             color: var(--text-gray);
         }
+
+        /* Request Detail Modal */
+        .request-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: var(--white);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 10001;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: var(--text-gray);
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--text-dark);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-section {
+            margin-bottom: 32px;
+        }
+
+        .modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-section h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0 0 16px 0;
+        }
+
+        .resident-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .modal-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(81, 162, 255, 1) 0%, rgba(97, 95, 255, 1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 24px;
+            font-weight: 400;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .modal-avatar-initials {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .resident-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .resident-name-large {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .resident-email {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-item label {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--text-gray);
+        }
+
+        .info-item span {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-dark);
+        }
+
+        .description-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .media-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
+        }
+
+        .media-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--border);
+        }
+
+        .media-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .media-image:hover {
+            transform: scale(1.05);
+        }
+
+        .media-video {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .media-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .media-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Media Viewer */
+        .media-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10002;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .viewer-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .viewer-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            z-index: 10003;
+        }
+
+        .viewer-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: var(--white);
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .viewer-image {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .viewer-video {
+            max-width: 100%;
+            max-height: 90vh;
+        }
+
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .media-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
     </style>
 </head>
 <body>
@@ -754,14 +1061,7 @@
                         <rect x="3.33" y="1.67" width="13.33" height="16.67" stroke="currentColor" stroke-width="1.67"/>
                         <path d="M6.67 9.17H6.67M6.67 13.33H6.67" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
                     </svg>
-                    <span class="nav-text">Reports</span>
-                </a>
-                <a href="/settings/official" class="nav-button">
-                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
-                        <path d="M2.54 1.68L17.47 1.68C17.47 1.68 17.47 1.68 17.47 1.68" stroke="currentColor" stroke-width="1.67"/>
-                        <circle cx="7.5" cy="7.5" r="5" stroke="currentColor" stroke-width="1.67"/>
-                    </svg>
-                    <span class="nav-text">Settings</span>
+                    <span class="nav-text">Activity Log</span>
                 </a>
             </nav>
 

@@ -133,25 +133,71 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Calculate trend over time (last 6 months)
+        // Calculate trend over time (last 2 months: November and December)
         const now = new Date();
-        const months = [];
-        const monthData = [0, 0, 0, 0, 0, 0];
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth(); // 0-11, where 11 = December
         
-        for (let i = 5; i >= 0; i--) {
-            const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const months = [];
+        const monthData = [0, 0];
+        
+        // Generate labels for last 2 months (November and December)
+        // months[0] = November (1 month ago), months[1] = December (current month)
+        for (let i = 1; i >= 0; i--) {
+            const monthIndex = currentMonth - i;
+            let year = currentYear;
+            let month = monthIndex;
+            
+            // Handle year rollover
+            if (month < 0) {
+                month += 12;
+                year -= 1;
+            }
+            
+            const date = new Date(year, month, 1);
             months.push(date.toLocaleDateString('en-US', { month: 'short' }));
         }
+        
+        console.log('Generated months labels:', months);
+        console.log('Current month index:', currentMonth, 'Current month name:', months[1]);
 
+        // Count requests per month
         requests.forEach(req => {
             if (req.created_at) {
-                const reqDate = new Date(req.created_at);
-                const monthsAgo = (now.getMonth() - reqDate.getMonth()) + (now.getFullYear() - reqDate.getFullYear()) * 12;
-                if (monthsAgo >= 0 && monthsAgo < 6) {
-                    monthData[monthsAgo]++;
+                let reqDate;
+                if (req.created_at instanceof Date) {
+                    reqDate = req.created_at;
+                } else {
+                    // Parse date string - handle UTC timestamps
+                    let dateString = req.created_at;
+                    if (dateString.includes('T') && !dateString.endsWith('Z') && 
+                        !dateString.match(/[+-]\d{2}:\d{2}$/) && 
+                        !dateString.match(/[+-]\d{4}$/)) {
+                        dateString = dateString + 'Z';
+                    }
+                    reqDate = new Date(dateString);
+                }
+                
+                // Use UTC methods for consistent date handling
+                const reqYear = reqDate.getUTCFullYear();
+                const reqMonth = reqDate.getUTCMonth();
+                
+                // Calculate months difference from current month
+                // monthsDiff = 0 means current month (December), 1 means 1 month ago (November)
+                const monthsDiff = (currentYear - reqYear) * 12 + (currentMonth - reqMonth);
+                
+                // Map to our 2-month array (index 0 = November, index 1 = December)
+                if (monthsDiff >= 0 && monthsDiff < 2) {
+                    const arrayIndex = 1 - monthsDiff; // Reverse the index: 0 = November, 1 = December
+                    if (arrayIndex >= 0 && arrayIndex < 2) {
+                        monthData[arrayIndex]++;
+                        console.log(`Request from ${reqYear}-${reqMonth + 1}: monthsDiff=${monthsDiff}, mapped to index ${arrayIndex} (${months[arrayIndex]})`);
+                    }
                 }
             }
         });
+        
+        console.log('Month data array:', monthData);
 
         // Update Issues by Type Chart
         const issuesCtx = document.getElementById('issuesChart');
@@ -214,7 +260,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                     family: 'Inter',
                                     size: 12
                                 },
-                                color: '#666666'
+                                color: '#666666',
+                                padding: 10,
+                                maxRotation: 0,
+                                minRotation: 0,
+                                autoSkip: false
                             },
                             grid: {
                                 display: false

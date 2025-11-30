@@ -206,7 +206,7 @@ const togglePassword = document.getElementById('togglePassword');
       google.accounts.id.renderButton(googleSigninBtn, {
         theme: 'outline',
         size: 'large',
-        width: '100%',
+        // width removed - Google auto-sizes based on container
         text: 'signin_with',
         type: 'standard'
       });

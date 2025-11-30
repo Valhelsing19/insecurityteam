@@ -2,6 +2,18 @@ console.log('=== submit-request.js LOADED ===');
 // File upload preview - Multiple Images and Videos
 document.addEventListener('DOMContentLoaded', function() {
     console.log('=== DOM Content Loaded ===');
+    
+    // Logout handler
+    const logoutBtn = document.querySelector('.logout-button');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+            // Clear authentication data
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_data');
+            // Redirect to login page
+            window.location.href = '/login';
+        });
+    }
     // Image upload handler - Multiple files
     const imageInput = document.getElementById('photo');
     const imageUpload = imageInput ? imageInput.closest('.file-upload') : null;
@@ -18,6 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (imageInput && imageUpload) {
         imageInput.addEventListener('change', function(e) {
+            console.log('=== IMAGE INPUT CHANGED ===');
+            console.log('Files selected:', e.target.files.length);
+            console.log('File names:', Array.from(e.target.files).map(f => f.name));
+
             if (e.target.files.length > 0) {
                 const files = Array.from(e.target.files);
 
@@ -103,6 +119,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (videoInput && videoUpload) {
         videoInput.addEventListener('change', function(e) {
+            console.log('=== VIDEO INPUT CHANGED ===');
+            console.log('Files selected:', e.target.files.length);
+            console.log('File names:', Array.from(e.target.files).map(f => f.name));
+
             if (e.target.files.length > 0) {
                 const files = Array.from(e.target.files);
 
@@ -332,6 +352,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             try {
                 console.log('Submitting request...');
+
+                // ADD THIS - Check files BEFORE the detection code
+                const photoInputCheck = document.getElementById('photo');
+                const videoInputCheck = document.getElementById('video');
+                console.log('=== BEFORE FILE DETECTION ===');
+                console.log('photoInputCheck?.files?.length:', photoInputCheck?.files?.length);
+                console.log('videoInputCheck?.files?.length:', videoInputCheck?.files?.length);
 
                 // Check if there are files to upload
                 const photoInput = document.getElementById('photo');

@@ -143,17 +143,27 @@ document.addEventListener('DOMContentLoaded', function() {
         tableBody.innerHTML = requests.map(request => {
             const residentName = request.user_name || 'Unknown';
             const initials = getInitials(residentName);
+            const profilePicture = request.user_picture || null;
             const issue = request.title || request.description || 'No description';
             const date = formatDate(request.created_at);
             const priority = request.priority || 'medium';
             const status = request.status || 'pending';
             const assignedOfficial = request.assigned_official ? request.assigned_official.name : null;
 
+            // Create avatar HTML - show picture if available, otherwise show initials
+            const avatarHtml = profilePicture 
+                ? `<img src="${escapeHtml(profilePicture)}" alt="${escapeHtml(residentName)}" class="resident-avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` 
+                : '';
+            const initialsHtml = `<div class="resident-avatar-initials" ${profilePicture ? 'style="display:none;"' : ''}>${initials}</div>`;
+
             return `
                 <tr>
                     <td>
                         <div class="resident-cell">
-                            <div class="resident-avatar">${initials}</div>
+                            <div class="resident-avatar">
+                                ${avatarHtml}
+                                ${initialsHtml}
+                            </div>
                             <span class="resident-name">${escapeHtml(residentName)}</span>
                         </div>
                     </td>
@@ -181,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>
                         <button class="action-button" onclick="openRequestModal(${request.id})">
                             <span class="action-text">
-                                <span>${assignedOfficial ? 'View' : 'Assign'}</span>
+                                <span>View</span>
                             </span>
                             <svg class="action-arrow" viewBox="0 0 16 16" fill="none">
                                 <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/>
@@ -491,18 +501,172 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Open request modal (for assigning/updating)
+    // Open request modal (for viewing details)
     window.openRequestModal = function(requestId) {
         const request = allRequests.find(r => r.id === requestId);
         if (!request) return;
 
-        // Simple modal for now - you can enhance this later
-        const action = confirm(`Request: ${request.title || request.description}\n\nWhat would you like to do?\n\nOK = View Details\nCancel = Close`);
-        
-        if (action) {
-            // Open a detailed view or modal
-            // For now, just show an alert with request details
-            alert(`Request Details:\n\nResident: ${request.user_name}\nIssue: ${request.title || request.description}\nStatus: ${request.status}\nPriority: ${request.priority || 'medium'}\nAssigned To: ${request.assigned_official ? request.assigned_official.name : 'Unassigned'}`);
+        // Create or get modal
+        let modal = document.getElementById('requestDetailModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'requestDetailModal';
+            modal.className = 'request-modal';
+            modal.innerHTML = `
+                <div class="modal-overlay" onclick="closeRequestModal()"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Request Details</h2>
+                        <button class="modal-close" onclick="closeRequestModal()">×</button>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+                        <!-- Content will be populated here -->
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Populate modal with request details
+        const modalBody = document.getElementById('modalBody');
+        const residentName = request.user_name || 'Unknown';
+        const initials = getInitials(residentName);
+        const profilePicture = request.user_picture || null;
+        const issue = request.title || request.description || 'No description';
+        const fullDescription = request.description || request.title || 'No description';
+        const date = formatDate(request.created_at);
+        const priority = request.priority || 'medium';
+        const status = request.status || 'pending';
+        const assignedOfficial = request.assigned_official ? request.assigned_official.name : 'Unassigned';
+        const issueType = request.issue_type || 'Not specified';
+        const location = request.location || 'Not specified';
+        const mediaFiles = request.media_files || [];
+
+        // Create avatar HTML
+        const avatarHtml = profilePicture 
+            ? `<img src="${escapeHtml(profilePicture)}" alt="${escapeHtml(residentName)}" class="modal-avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` 
+            : '';
+        const initialsHtml = `<div class="modal-avatar-initials" ${profilePicture ? 'style="display:none;"' : ''}>${initials}</div>`;
+
+        modalBody.innerHTML = `
+            <div class="modal-section">
+                <h3>Resident Information</h3>
+                <div class="resident-info">
+                    <div class="modal-avatar">
+                        ${avatarHtml}
+                        ${initialsHtml}
+                    </div>
+                    <div class="resident-details">
+                        <p class="resident-name-large">${escapeHtml(residentName)}</p>
+                        <p class="resident-email">${escapeHtml(request.user_email || 'No email')}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>Issue Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Issue Type:</label>
+                        <span>${escapeHtml(issueType)}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Priority:</label>
+                        <span class="priority-badge ${priority}">${priority}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Status:</label>
+                        <span class="status-badge ${status}">
+                            ${getStatusIcon(status)}
+                            ${status}
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <label>Date Submitted:</label>
+                        <span>${date}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Location:</label>
+                        <span>${escapeHtml(location)}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Assigned To:</label>
+                        <span>${escapeHtml(assignedOfficial)}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>Description</h3>
+                <p class="description-text">${escapeHtml(fullDescription)}</p>
+            </div>
+
+            ${mediaFiles.length > 0 ? `
+            <div class="modal-section">
+                <h3>Media Files</h3>
+                <div class="media-gallery">
+                    ${mediaFiles.map(file => {
+                        const isImage = file.type === 'image' || /\.(jpg|jpeg|png|gif|webp)$/i.test(file.url);
+                        const isVideo = file.type === 'video' || /\.(mp4|webm|ogg)$/i.test(file.url);
+                        
+                        if (isImage) {
+                            return `<div class="media-item">
+                                <img src="${escapeHtml(file.url)}" alt="Issue image" class="media-image" onclick="openMediaViewer('${escapeHtml(file.url)}', 'image')">
+                            </div>`;
+                        } else if (isVideo) {
+                            return `<div class="media-item">
+                                <video src="${escapeHtml(file.url)}" class="media-video" controls></video>
+                            </div>`;
+                        } else {
+                            return `<div class="media-item">
+                                <a href="${escapeHtml(file.url)}" target="_blank" class="media-link">View File</a>
+                            </div>`;
+                        }
+                    }).join('')}
+                </div>
+            </div>
+            ` : ''}
+        `;
+
+        // Show modal
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    };
+
+    // Close request modal
+    window.closeRequestModal = function() {
+        const modal = document.getElementById('requestDetailModal');
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    };
+
+    // Open media viewer
+    window.openMediaViewer = function(url, type) {
+        const viewer = document.createElement('div');
+        viewer.className = 'media-viewer';
+        viewer.innerHTML = `
+            <div class="viewer-overlay" onclick="closeMediaViewer()"></div>
+            <div class="viewer-content">
+                <button class="viewer-close" onclick="closeMediaViewer()">×</button>
+                ${type === 'image' 
+                    ? `<img src="${escapeHtml(url)}" alt="Full size image" class="viewer-image">`
+                    : `<video src="${escapeHtml(url)}" controls class="viewer-video"></video>`
+                }
+            </div>
+        `;
+        document.body.appendChild(viewer);
+        viewer.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    };
+
+    // Close media viewer
+    window.closeMediaViewer = function() {
+        const viewer = document.querySelector('.media-viewer');
+        if (viewer) {
+            viewer.remove();
+            document.body.style.overflow = '';
         }
     };
 

@@ -13,7 +13,7 @@ The proposed Smart Neighborhood Maintenance Request and Response System addresse
 3.2.1 Software
 
 1. Netlify Functions
-   - Features Used: Node.js serverless functions
+   - Features Used: Node.js runtime for serverless functions
    - Purpose: Serverless backend API endpoints for authentication, user registration, maintenance request management, official account management, and activity logging. Enables scalable, cloud-based backend services without managing server infrastructure. This is the primary backend for production deployment.
 
 2. Bootstrap 5.3.8
@@ -64,7 +64,7 @@ The software stack utilizes a modern serverless architecture with Netlify Functi
 
 The frontend is built as static HTML files for optimal performance and deployment flexibility. These static files are served directly from the Netlify CDN, ensuring fast load times and global distribution. Authentication is handled through JWT tokens stored in localStorage, providing stateless authentication suitable for serverless architectures. The system uses Supabase, a cloud-hosted PostgreSQL database, which provides robust data persistence, built-in security features, and RESTful API access. Supabase eliminates the need for separate database server management while providing enterprise-grade database capabilities.
 
-The system implements automated text classification through a rule-based keyword matching system. When residents submit maintenance requests with text descriptions, the system uses the Franc library to detect the language (English or Waray-Waray). Waray-Waray text is automatically translated to English using the Google Translate API to improve classification accuracy. The system then matches keywords from predefined lists against the text to automatically categorize requests into predefined categories (broken-streetlights, potholes, clogged-drainage, damaged-sidewalks) and assign priority levels (low, medium, high) based on urgency indicators. This rule-based approach provides fast, reliable classification without requiring machine learning model training or inference infrastructure. Photos uploaded by residents are stored for documentation purposes but are not automatically analyzed or classified in the current implementation. The system implements a separate officials management system with dedicated authentication, allowing local government officials to manage maintenance requests independently from resident accounts. Activity logging tracks all official actions including status changes, priority updates, and request assignments, providing a complete audit trail for accountability and transparency. To maintain user engagement and transparency, email notifications update residents on their request status. Google Sign-In integration provides an additional authentication method, enhancing user convenience and reducing registration friction.
+The system implements automated text classification through a rule-based keyword matching system. When residents submit maintenance requests with text descriptions, the system uses the Franc library to detect the language (English or Waray-Waray). Waray-Waray text is automatically translated to English using the Google Translate API to improve classification accuracy. The system then matches keywords from predefined lists against the text to automatically categorize requests into predefined categories (broken-streetlights, potholes, clogged-drainage, damaged-sidewalks) and assign priority levels (low, medium, high, urgent) based on urgency indicators. This rule-based approach provides fast, reliable classification without requiring machine learning model training or inference infrastructure. Photos uploaded by residents are stored for documentation purposes but are not automatically analyzed or classified in the current implementation. The system implements a separate officials management system with dedicated authentication, allowing local government officials to manage maintenance requests independently from resident accounts. Activity logging tracks all official actions including status changes, priority updates, and request assignments, providing a complete audit trail for accountability and transparency. To maintain user engagement and transparency, email notifications update residents on their request status. Google Sign-In integration provides an additional authentication method, enhancing user convenience and reducing registration friction.
 
 3.2.2 Hardware
 
@@ -101,8 +101,6 @@ Residents submit maintenance reports through their smartphones or personal compu
 ○	Track the progress of their requests through real-time updates and email notifications.
 
 ○	Authenticate using traditional email/password or Google Sign-In for convenient access.
-
-○	Provide feedback on completed maintenance activities to ensure quality and transparency.
 
 ●	Administrative Staff (Local Government Officials)
 
