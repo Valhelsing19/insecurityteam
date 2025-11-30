@@ -1,6 +1,6 @@
-const mysql = require('mysql2/promise');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { getSupabaseClient } = require('./supabase');
 
 exports.handler = async (event, context) => {
   // Only allow POST requests
@@ -23,24 +23,21 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Create MySQL connection
-    const connection = await mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
-    });
+    const supabase = getSupabaseClient();
 
     // Query user from database
-    const [users] = await connection.execute(
-      'SELECT * FROM users WHERE email = ? AND is_official = ?',
-      [email, isOfficial ? 1 : 0]
-    );
+    const { data: users, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .eq('is_official', isOfficial)
+      .limit(1);
 
-    await connection.end();
+    if (error) {
+      throw error;
+    }
 
-    if (users.length === 0) {
+    if (!users || users.length === 0) {
       return {
         statusCode: 401,
         headers: { 'Content-Type': 'application/json' },
@@ -66,7 +63,7 @@ exports.handler = async (event, context) => {
       { 
         id: user.id, 
         email: user.email, 
-        isOfficial: user.is_official === 1 
+        isOfficial: user.is_official === true
       },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
@@ -82,7 +79,7 @@ exports.handler = async (event, context) => {
           id: user.id,
           email: user.email,
           name: user.name,
-          isOfficial: user.is_official === 1
+          isOfficial: user.is_official === true
         }
       })
     };
@@ -91,7 +88,10 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error: 'Internal server error' })
+      body: JSON.stringify({ 
+        error: 'Internal server error',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      })
     };
   }
 };

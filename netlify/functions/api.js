@@ -1,5 +1,5 @@
-const mysql = require('mysql2/promise');
 const jwt = require('jsonwebtoken');
+const { getSupabaseClient } = require('./supabase');
 
 // Helper function to verify JWT token
 function verifyToken(event) {
@@ -16,17 +16,6 @@ function verifyToken(event) {
   } catch (error) {
     return null;
   }
-}
-
-// Helper function to get database connection
-async function getConnection() {
-  return await mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
-  });
 }
 
 exports.handler = async (event, context) => {
@@ -54,56 +43,74 @@ exports.handler = async (event, context) => {
       };
     }
 
+    const supabase = getSupabaseClient();
+
     // Get user dashboard data
     if (path === '/dashboard' && method === 'GET') {
-      const connection = await getConnection();
-      
       // Get user's requests
-      const [requests] = await connection.execute(
-        `SELECT * FROM maintenance_requests WHERE user_id = ? ORDER BY created_at DESC LIMIT 10`,
-        [user.id]
-      );
+      const { data: requests, error: reqError } = await supabase
+        .from('maintenance_requests')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(10);
+
+      if (reqError) {
+        throw reqError;
+      }
 
       // Get statistics
-      const [stats] = await connection.execute(
-        `SELECT 
-          COUNT(*) as total,
-          SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as active,
-          SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed,
-          SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending
-         FROM maintenance_requests WHERE user_id = ?`,
-        [user.id]
-      );
+      const { data: allRequests, error: statsError } = await supabase
+        .from('maintenance_requests')
+        .select('status')
+        .eq('user_id', user.id);
 
-      await connection.end();
+      if (statsError) {
+        throw statsError;
+      }
+
+      const stats = {
+        total: allRequests?.length || 0,
+        active: allRequests?.filter(r => r.status === 'active').length || 0,
+        completed: allRequests?.filter(r => r.status === 'completed').length || 0,
+        pending: allRequests?.filter(r => r.status === 'pending').length || 0
+      };
 
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          requests,
-          stats: stats[0] || { total: 0, active: 0, completed: 0, pending: 0 }
+          requests: requests || [],
+          stats
         })
       };
     }
 
     // Get all requests (for officials)
     if (path === '/requests' && method === 'GET' && user.isOfficial) {
-      const connection = await getConnection();
-      
-      const [requests] = await connection.execute(
-        `SELECT mr.*, u.name as user_name, u.email as user_email 
-         FROM maintenance_requests mr 
-         JOIN users u ON mr.user_id = u.id 
-         ORDER BY mr.created_at DESC`
-      );
+      const { data: requests, error } = await supabase
+        .from('maintenance_requests')
+        .select(`
+          *,
+          users!inner(name, email)
+        `)
+        .order('created_at', { ascending: false });
 
-      await connection.end();
+      if (error) {
+        throw error;
+      }
+
+      // Transform data to match expected format
+      const formattedRequests = requests?.map(req => ({
+        ...req,
+        user_name: req.users?.name,
+        user_email: req.users?.email
+      })) || [];
 
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ requests })
+        body: JSON.stringify({ requests: formattedRequests })
       };
     }
 
@@ -119,22 +126,29 @@ exports.handler = async (event, context) => {
         };
       }
 
-      const connection = await getConnection();
-      
-      const [result] = await connection.execute(
-        `INSERT INTO maintenance_requests (user_id, title, description, location, category, status, created_at, updated_at) 
-         VALUES (?, ?, ?, ?, ?, 'pending', NOW(), NOW())`,
-        [user.id, title, description, location, category || 'general']
-      );
+      const { data: result, error } = await supabase
+        .from('maintenance_requests')
+        .insert([{
+          user_id: user.id,
+          title,
+          description,
+          location,
+          category: category || 'general',
+          status: 'pending'
+        }])
+        .select()
+        .single();
 
-      await connection.end();
+      if (error) {
+        throw error;
+      }
 
       return {
         statusCode: 201,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           success: true, 
-          id: result.insertId,
+          id: result.id,
           message: 'Request submitted successfully' 
         })
       };
@@ -153,14 +167,14 @@ exports.handler = async (event, context) => {
         };
       }
 
-      const connection = await getConnection();
-      
-      await connection.execute(
-        'UPDATE maintenance_requests SET status = ?, updated_at = NOW() WHERE id = ?',
-        [status, requestId]
-      );
+      const { error } = await supabase
+        .from('maintenance_requests')
+        .update({ status })
+        .eq('id', requestId);
 
-      await connection.end();
+      if (error) {
+        throw error;
+      }
 
       return {
         statusCode: 200,
@@ -179,7 +193,10 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error: 'Internal server error' })
+      body: JSON.stringify({ 
+        error: 'Internal server error',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      })
     };
   }
 };
