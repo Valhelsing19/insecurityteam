@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Settings - Smart Neighborhood</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/settings.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <div class="logo-circle">
+                        <img src="{{ asset('images/dashboard-logo.png') }}" alt="Smart Neighborhood Logo">
+                    </div>
+                    <div class="logo-text">
+                        <h2>Smart Neighborhood</h2>
+                        <p>resident Portal</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="navigation">
+                <a href="/dashboard" class="nav-button">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <rect x="2.5" y="2.5" width="15" height="15" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M7.5 10H12.5M7.5 7.5H12.5M7.5 12.5H12.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    </svg>
+                    <span class="nav-text">Home</span>
+                </a>
+                <a href="/submit-request" class="nav-button">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <rect x="1.67" y="1.67" width="16.67" height="16.67" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M10 6.67V13.33M6.67 10H13.33" stroke="currentColor" stroke-width="1.67"/>
+                    </svg>
+                    <span class="nav-text">Submit Request</span>
+                </a>
+                <a href="/my-requests" class="nav-button">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <path d="M3.33 6.67H6.67M3.33 10H6.67M3.33 13.33H6.67" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                        <path d="M6.67 1.67H13.33V18.33H6.67V1.67Z" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M10 6.67H13.33M10 10H13.33M10 13.33H13.33" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    </svg>
+                    <span class="nav-text">My Requests</span>
+                </a>
+                <a href="/settings" class="nav-button active">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <circle cx="10" cy="10" r="5" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M10 2.54V5M10 15V17.46M17.46 10H15M5 10H2.54" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    </svg>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="logout-button">
+                    <svg class="logout-icon" viewBox="0 0 16 16" fill="none">
+                        <path d="M10.66 4.66L13.33 7.33L10.66 10M13.33 7.33H6M6 2H3.33C2.6 2 2 2.6 2 3.33V12.67C2 13.4 2.6 14 3.33 14H6" stroke="#E7000B" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-description">Manage your account settings and preferences</p>
+            </div>
+
+            <!-- Settings Content -->
+            <div class="settings-content">
+                <!-- Profile Section -->
+                <div class="profile-card">
+                    <!-- Profile Header -->
+                    <div class="profile-header">
+                        <div class="avatar-container">
+                            <div class="avatar" id="user-avatar">U</div>
+                            <img id="profile-picture" class="profile-picture" style="display: none;" alt="Profile Picture">
+                            <input type="file" id="profile-picture-input" accept="image/*" style="display: none;">
+                        </div>
+                        <div class="profile-info">
+                            <h3 class="profile-name">User</h3>
+                            <p class="profile-email"></p>
+                            <span class="profile-badge">resident</span>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <!-- Form Section -->
+                    <div class="form-section">
+                        <form>
+                            <!-- First Name / Last Name -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first_name" class="form-label">First Name</label>
+                                    <div class="input-wrapper">
+                                        <svg class="input-icon" viewBox="0 0 16 16" fill="none">
+                                            <circle cx="8" cy="8" r="5" stroke="currentColor" stroke-width="1.33"/>
+                                            <path d="M8 4V8L11 11" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/>
+                                        </svg>
+                                        <input type="text" id="first_name" name="first_name" class="form-input" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name" class="form-label">Last Name</label>
+                                    <div class="input-wrapper">
+                                        <svg class="input-icon" viewBox="0 0 16 16" fill="none">
+                                            <circle cx="8" cy="8" r="5" stroke="currentColor" stroke-width="1.33"/>
+                                            <path d="M8 4V8L11 11" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/>
+                                        </svg>
+                                        <input type="text" id="last_name" name="last_name" class="form-input" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email / Phone -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <div class="input-wrapper">
+                                        <svg class="input-icon" viewBox="0 0 16 16" fill="none">
+                                            <rect x="2.67" y="1.33" width="10.66" height="13.33" stroke="currentColor" stroke-width="1.33"/>
+                                            <path d="M2.67 4.66L8 8L13.33 4.66" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/>
+                                        </svg>
+                                        <input type="email" id="email" name="email" class="form-input" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <div class="input-wrapper">
+                                        <svg class="input-icon" viewBox="0 0 16 16" fill="none">
+                                            <path d="M2.67 1.33L10.66 13.33" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/>
+                                            <circle cx="8" cy="8" r="4" stroke="currentColor" stroke-width="1.33"/>
+                                        </svg>
+                                        <input type="tel" id="phone" name="phone" class="form-input" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="address" class="form-label">Address</label>
+                                    <div class="input-wrapper">
+                                        <svg class="input-icon" viewBox="0 0 16 16" fill="none">
+                                            <path d="M2.67 1.33L10.66 13.33" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/>
+                                            <circle cx="8" cy="8" r="4" stroke="currentColor" stroke-width="1.33"/>
+                                        </svg>
+                                        <input type="text" id="address" name="address" class="form-input" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Save Button -->
+                            <button type="submit" class="save-button">
+                                <svg class="save-icon" viewBox="0 0 16 16" fill="none">
+                                    <path d="M2 2L11.99 11.99" stroke="white" stroke-width="1.33" stroke-linecap="round"/>
+                                    <path d="M4.66 8.66L6.66 10.66L11.33 2" stroke="white" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Save Changes</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Contact Information Section -->
+                <!-- Contact Information Card -->
+                <div class="security-card">
+                    <div class="security-card-header">
+                        <div class="security-icon blue">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <rect x="2.5" y="2.5" width="15" height="15" stroke="#155DFC" stroke-width="1.67"/>
+                                <path d="M2.5 7.5L10 12.5L17.5 7.5" stroke="#155DFC" stroke-width="1.67" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="security-header-content">
+                            <h3 class="security-title">Contact Information</h3>
+                            <p class="security-description">Manage your contact preferences and emergency contacts</p>
+                        </div>
+                    </div>
+
+                    <div class="security-form-section">
+                        <form id="contact-info-form">
+                            <!-- Emergency Contact Name / Phone -->
+                            <div class="form-row">
+                                <div class="security-form-group">
+                                    <label for="emergency_contact_name" class="form-label">Emergency Contact Name</label>
+                                    <div class="input-wrapper">
+                                        <svg class="input-icon" viewBox="0 0 16 16" fill="none">
+                                            <rect x="3.33" y="10" width="9.33" height="4" stroke="currentColor" stroke-width="1.33"/>
+                                            <path d="M5.33 2L5.33 5.33L10.66 5.33" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/>
+                                        </svg>
+                                        <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="form-input" placeholder="Enter contact name" value="">
+                                    </div>
+                                </div>
+                                <div class="security-form-group">
+                                    <label for="emergency_contact_phone" class="form-label">Emergency Contact Phone</label>
+                                    <div class="input-wrapper">
+                                        <svg class="input-icon" viewBox="0 0 16 16" fill="none">
+                                            <path d="M2.67 1.33L10.66 13.33" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/>
+                                            <circle cx="8" cy="8" r="4" stroke="currentColor" stroke-width="1.33"/>
+                                        </svg>
+                                        <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" class="form-input" placeholder="Enter phone number" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Preferred Contact Method -->
+                            <div class="security-form-group">
+                                <label for="preferred_contact_method" class="form-label">Preferred Contact Method</label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" viewBox="0 0 16 16" fill="none">
+                                        <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/>
+                                    </svg>
+                                    <select id="preferred_contact_method" name="preferred_contact_method" class="form-input" style="padding-left: 40px;">
+                                        <option value="phone" selected>Phone</option>
+                                        <option value="sms">SMS</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Contact Time Preferences -->
+                            <div class="security-form-group">
+                                <label for="contact_time_preference" class="form-label">Preferred Contact Time</label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" viewBox="0 0 16 16" fill="none">
+                                        <circle cx="8" cy="8" r="5" stroke="currentColor" stroke-width="1.33"/>
+                                        <path d="M8 4V8L11 11" stroke="currentColor" stroke-width="1.33" stroke-linecap="round"/>
+                                    </svg>
+                                    <select id="contact_time_preference" name="contact_time_preference" class="form-input" style="padding-left: 40px;">
+                                        <option value="anytime" selected>Anytime</option>
+                                        <option value="business_hours">Business Hours (9 AM - 5 PM)</option>
+                                        <option value="morning">Morning (8 AM - 12 PM)</option>
+                                        <option value="afternoon">Afternoon (12 PM - 5 PM)</option>
+                                        <option value="evening">Evening (5 PM - 9 PM)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Save Button -->
+                            <button type="submit" class="update-button">
+                                <span>Save Contact Information</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/settings.js') }}"></script>
+</body>
+</html>
+

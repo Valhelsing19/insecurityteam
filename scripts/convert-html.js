@@ -32,8 +32,14 @@ const bladeFiles = [
   { src: 'login.blade.php', dest: 'login.html' },
   { src: 'login_official.blade.php', dest: 'login/official.html' },
   { src: 'create_account.blade.php', dest: 'register.html' },
-  { src: 'dashboard.blade.php', dest: 'dashboard.html' },
-  { src: 'dashboard_official.blade.php', dest: 'dashboard/official.html' }
+  { src: 'dashboard_resident.blade.php', dest: 'dashboard.html' },
+  { src: 'dashboard_official.blade.php', dest: 'dashboard/official.html' },
+  { src: 'all_requests_official.blade.php', dest: 'all-requests/official.html' },
+  { src: 'reports.blade.php', dest: 'reports.html' },
+  { src: 'request_management.blade.php', dest: 'my-requests.html' },
+  { src: 'resident_page.blade.php', dest: 'resident/page.html' },
+  { src: 'official_page.blade.php', dest: 'official/page.html' },
+  { src: 'submit_request.blade.php', dest: 'submit-request.html' }
 ];
 
 bladeFiles.forEach(({ src, dest }) => {

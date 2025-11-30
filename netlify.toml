@@ -43,6 +43,26 @@
   to = "/dashboard/official.html"
   status = 200
 
+[[redirects]]
+  from = "/official/page"
+  to = "/official/page.html"
+  status = 200
+
+[[redirects]]
+  from = "/all-requests"
+  to = "/all-requests/official"
+  status = 302
+
+[[redirects]]
+  from = "/all-requests/official"
+  to = "/all-requests/official.html"
+  status = 200
+
+[[redirects]]
+  from = "/reports"
+  to = "/reports.html"
+  status = 200
+
 # Note: Removed catch-all redirect to index.html
 # This was causing Google Sign-In redirects to fail
 # Actual HTML files (dashboard.html, login.html, etc.) should be served directly

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Submit Request - Smart Neighborhood</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/submit-request.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <div class="logo-circle">
+                        <img src="/images/dashboard-logo.png" alt="Smart Neighborhood Logo">
+                    </div>
+                    <div class="logo-text">
+                        <h2>Smart Neighborhood</h2>
+                        <p>resident Portal</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="navigation">
+                <a href="/dashboard" class="nav-button">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 10L7.5 2.5L7.5 10" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                        <rect x="2.5" y="1.67" width="15" height="15.83" stroke="currentColor" stroke-width="1.67"/>
+                    </svg>
+                    <span class="nav-text">Home</span>
+                </a>
+                <a href="/submit-request" class="nav-button active">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <rect x="1.67" y="1.67" width="16.67" height="16.67" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M10 6.67V13.33M6.67 10H13.33" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    </svg>
+                    <span class="nav-text">Submit Request</span>
+                </a>
+                <a href="/my-requests" class="nav-button">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <path d="M3.33 6.67H6.67M3.33 10H6.67M3.33 13.33H6.67" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                        <path d="M6.67 1.67H13.33V18.33H6.67V1.67Z" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M10 6.67H13.33M10 10H13.33M10 13.33H13.33" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    </svg>
+                    <span class="nav-text">My Requests</span>
+                </a>
+                <a href="/settings" class="nav-button">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <circle cx="10" cy="10" r="5" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M10 2.54V5M10 15V17.46M17.46 10H15M5 10H2.54" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    </svg>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="logout-button">
+                    <svg class="logout-icon" viewBox="0 0 16 16" fill="none">
+                        <path d="M10.66 4.66L13.33 7.33L10.66 10M13.33 7.33H6M6 2H3.33C2.6 2 2 2.6 2 3.33V12.67C2 13.4 2.6 14 3.33 14H6" stroke="#E7000B" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <a href="/dashboard" class="back-button">
+                    <span>← Back to Dashboard</span>
+                </a>
+                <h1 class="page-title">Submit Request</h1>
+                <p class="page-description">Report a maintenance issue in your neighborhood</p>
+            </div>
+
+            <!-- Content Layout -->
+            <div class="content-layout">
+                <div class="left-column">
+                    <!-- Form Card -->
+                    <div class="form-card">
+                        <form class="form-content" method="POST" action="/submit-request" enctype="multipart/form-data">
+                            <!-- Type of Issue -->
+                            <div class="form-group">
+                                <label for="issue_type" class="form-label">Type of Issue</label>
+                                <div class="form-select">
+                                    <select id="issue_type" name="issue_type">
+                                        <option value="">Select issue type</option>
+                                        <option value="broken-streetlights">Broken Streetlights</option>
+                                        <option value="potholes">Potholes</option>
+                                        <option value="clogged-drainage">Clogged Drainage</option>
+                                        <option value="damaged-sidewalks">Damaged Sidewalks</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <svg class="select-arrow" viewBox="0 0 16 16" fill="none">
+                                        <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Description of Problem -->
+                            <div class="form-group">
+                                <label for="description" class="form-label">Description of Problem</label>
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    class="form-textarea"
+                                    placeholder="Please describe the issue in detail..."
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <!-- Attach Photo -->
+                            <div class="form-group">
+                                <label class="form-label">Attach Photos</label>
+                                <label for="photo" class="file-upload">
+                                    <input type="file" id="photo" name="photo[]" class="file-input" accept="image/*" multiple>
+                                    <div class="file-upload-content">
+                                        <svg class="file-upload-icon" viewBox="0 0 48 48" fill="none">
+                                            <rect x="6" y="6" width="36" height="36" rx="2" stroke="#99A1AF" stroke-width="4"/>
+                                            <path d="M14 14H34M14 22H34M14 30H24" stroke="#99A1AF" stroke-width="4" stroke-linecap="round"/>
+                                        </svg>
+                                        <p class="file-upload-text">Click to upload or drag and drop</p>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Attach Video -->
+                            <div class="form-group">
+                                <label class="form-label">Attach Videos <span style="color: #717182; font-size: 12px; font-weight: normal;">(Max 25MB each)</span></label>
+                                <label for="video" class="file-upload">
+                                    <input type="file" id="video" name="video[]" class="file-input" accept="video/*" multiple>
+                                    <div class="file-upload-content">
+                                        <svg class="file-upload-icon" viewBox="0 0 48 48" fill="none">
+                                            <rect x="6" y="6" width="36" height="36" rx="2" stroke="#99A1AF" stroke-width="4"/>
+                                            <path d="M20 16L20 32L32 24L20 16Z" stroke="#99A1AF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <p class="file-upload-text">Click to upload or drag and drop</p>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="form-group">
+                                <label for="location" class="form-label">Location</label>
+                                <div class="location-input-wrapper">
+                                    <svg class="location-icon" viewBox="0 0 16 16" fill="none">
+                                        <path d="M2.67 1.33L10.66 13.33M2.67 1.33L10.66 13.33" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <circle cx="8" cy="8" r="4" stroke="currentColor" stroke-width="1.33"/>
+                                    </svg>
+                                    <input
+                                        type="text"
+                                        id="location"
+                                        name="location"
+                                        class="location-input"
+                                        placeholder="Enter location or address"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="submit-button">
+                                <svg class="submit-icon" viewBox="0 0 16 16" fill="none">
+                                    <circle cx="8" cy="8" r="6" stroke="white" stroke-width="1.33"/>
+                                    <circle cx="8" cy="8" r="3" fill="white"/>
+                                </svg>
+                                <span>Submit Request</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <!-- Recent Requests Card -->
+                    <div class="recent-requests-card">
+                        <h3 class="card-title">Recent Requests</h3>
+                        <div class="request-list" id="recent-requests-list">
+                            <div class="request-item">
+                                <svg class="request-icon" viewBox="0 0 16 16" fill="none">
+                                    <circle cx="8" cy="8" r="6" stroke="#6A7282" stroke-width="1.33"/>
+                                    <path d="M8 4V8L11 11" stroke="#6A7282" stroke-width="1.33" stroke-linecap="round"/>
+                                </svg>
+                                <div class="request-content">
+                                    <div class="request-title">Broken Streetlights</div>
+                                    <span class="request-badge pending">Pending</span>
+                                </div>
+                            </div>
+
+                            <div class="request-item">
+                                <svg class="request-icon" viewBox="0 0 16 16" fill="none">
+                                    <circle cx="8" cy="8" r="6" stroke="#6A7282" stroke-width="1.33"/>
+                                    <path d="M8 4V8L11 11" stroke="#6A7282" stroke-width="1.33" stroke-linecap="round"/>
+                                </svg>
+                                <div class="request-content">
+                                    <div class="request-title">Potholes</div>
+                                    <span class="request-badge in-progress">In Progress</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Tips Card -->
+                    <div class="tips-card">
+                        <h3 class="tips-title">Quick Tips</h3>
+                        <ul class="tips-list">
+                            <li class="tip-item">• Be specific in your description</li>
+                            <li class="tip-item">• Include photos when possible</li>
+                            <li class="tip-item">• Provide exact location details</li>
+                            <li class="tip-item">• Check for duplicate requests</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/submit-request.js"></script>
+</body>
+</html>
+

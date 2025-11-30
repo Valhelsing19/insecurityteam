@@ -1,12 +1,15 @@
+// Official Login JavaScript
 (function(){
   const togglePassword = document.getElementById('togglePassword');
   let passwordInput = document.getElementById('password');
   const eyeIcon = document.getElementById('eyeIcon');
   const loginForm = document.getElementById('loginForm');
-  const emailField = document.getElementById('emailField');
+  const usernameField = document.getElementById('usernameField');
   const passwordField = document.getElementById('passwordField');
-  const emailInput = document.getElementById('email');
+  const usernameInput = document.getElementById('username');
   const loginBtn = document.getElementById('loginBtn');
+  const alertMessage = document.getElementById('alertMessage');
+  const alertText = document.getElementById('alertText');
 
   // Password toggle functionality
   function setIcon(isVisible){
@@ -50,12 +53,8 @@
   }
 
   // Form validation
-  function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-
   function showFieldError(field, message) {
+    if (!field) return;
     field.classList.add('error');
     const errorMessage = field.querySelector('.error-message');
     if (errorMessage) {
@@ -64,26 +63,37 @@
   }
 
   function clearFieldError(field) {
+    if (!field) return;
     field.classList.remove('error');
+  }
+
+  function showAlert(message) {
+    if (alertMessage && alertText) {
+      alertText.textContent = message;
+      alertMessage.style.display = 'flex';
+    }
+  }
+
+  function hideAlert() {
+    if (alertMessage) {
+      alertMessage.style.display = 'none';
+    }
   }
 
   function validateForm() {
     let isValid = true;
 
-    // Validate email
-    const emailValue = emailInput.value.trim();
-    if (!emailValue) {
-      showFieldError(emailField, 'Email is required');
-      isValid = false;
-    } else if (!validateEmail(emailValue)) {
-      showFieldError(emailField, 'Please enter a valid email address');
+    // Validate username
+    const usernameValue = usernameInput ? usernameInput.value.trim() : '';
+    if (!usernameValue) {
+      showFieldError(usernameField, 'Username is required');
       isValid = false;
     } else {
-      clearFieldError(emailField);
+      clearFieldError(usernameField);
     }
 
     // Validate password
-    const passwordValue = passwordInput.value.trim();
+    const passwordValue = passwordInput ? passwordInput.value.trim() : '';
     if (!passwordValue) {
       showFieldError(passwordField, 'Password is required');
       isValid = false;
@@ -95,10 +105,11 @@
   }
 
   // Clear errors when user starts typing
-  if (emailInput) {
-    emailInput.addEventListener('input', function() {
+  if (usernameInput) {
+    usernameInput.addEventListener('input', function() {
       if (this.value.trim()) {
-        clearFieldError(emailField);
+        clearFieldError(usernameField);
+        hideAlert();
       }
     });
   }
@@ -107,34 +118,75 @@
     passwordInput.addEventListener('input', function() {
       if (this.value.trim()) {
         clearFieldError(passwordField);
+        hideAlert();
       }
     });
   }
 
   // Form submission handler
   if (loginForm) {
-    loginForm.addEventListener('submit', function(e) {
+    loginForm.addEventListener('submit', async function(e) {
       e.preventDefault();
 
       if (!validateForm()) {
         return false;
       }
 
-      // If validation passes, you can proceed with the actual form submission
-      // For now, we'll just prevent submission if validation fails
-      // Uncomment the line below when you're ready to submit the form
-      // this.submit();
-    });
-  }
+      // Hide alert
+      hideAlert();
 
-  // Also validate on button click (in case form submission is handled differently)
+      // Show loading state
+      if (loginBtn) {
+        loginBtn.disabled = true;
+        const btnText = loginBtn.querySelector('.btn-text');
+        if (btnText) {
+          btnText.textContent = 'Logging in...';
+        }
+      }
+
+      try {
+        const response = await fetch('/.netlify/functions/official-login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: usernameInput.value.trim(),
+            password: passwordInput.value
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Store authentication
+          localStorage.setItem('auth_token', data.token);
+          localStorage.setItem('user_data', JSON.stringify(data.user));
+
+          // Redirect to official page
+          window.location.href = '/official/page';
+        } else {
+          // Show error
+          showAlert(data.error || 'Invalid username or password');
+          if (loginBtn) {
+            loginBtn.disabled = false;
+            const btnText = loginBtn.querySelector('.btn-text');
+            if (btnText) {
+              btnText.textContent = 'Secure Login';
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        showAlert('An error occurred. Please try again.');
   if (loginBtn) {
-    loginBtn.addEventListener('click', function(e) {
-      if (!validateForm()) {
-        e.preventDefault();
-        return false;
+          loginBtn.disabled = false;
+          const btnText = loginBtn.querySelector('.btn-text');
+          if (btnText) {
+            btnText.textContent = 'Secure Login';
+          }
+        }
       }
     });
   }
 })();
-

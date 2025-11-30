@@ -60,9 +60,9 @@ exports.handler = async (event, context) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { 
-        id: user.id, 
-        email: user.email, 
+      {
+        id: user.id,
+        email: user.email,
         isOfficial: user.is_official === true
       },
       process.env.JWT_SECRET,
@@ -88,7 +88,7 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         error: 'Internal server error',
         details: process.env.NODE_ENV === 'development' ? error.message : undefined
       })

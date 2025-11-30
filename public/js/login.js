@@ -177,7 +177,7 @@ const togglePassword = document.getElementById('togglePassword');
           if (data.user.isOfficial) {
             window.location.href = '/dashboard/official';
           } else {
-            window.location.href = '/dashboard';
+            window.location.href = '/resident/page';
           }
         } else {
           showAlert(data.error || 'Invalid email or password');
@@ -307,7 +307,7 @@ const togglePassword = document.getElementById('togglePassword');
           if (data.user.isOfficial) {
             window.location.href = '/dashboard/official';
           } else {
-            window.location.href = '/dashboard';
+            window.location.href = '/resident/page';
           }
         } catch (redirectError) {
           console.error('Redirect error:', redirectError);

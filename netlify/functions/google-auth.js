@@ -213,6 +213,13 @@ exports.handler = async (event, context) => {
       }
     }
 
+    // Get full user profile including phone/address from database
+    const { data: fullUserProfile, error: profileError } = await supabase
+      .from('users')
+      .select('phone, address, unit, phone_number, unit_apt')
+      .eq('id', user.id)
+      .single();
+
     // Generate JWT token
     const jwtToken = jwt.sign(
       {
@@ -238,6 +245,9 @@ exports.handler = async (event, context) => {
           email: user.email,
           name: user.name,
           picture: user.picture,
+          phone: fullUserProfile?.phone || fullUserProfile?.phone_number || null,
+          address: fullUserProfile?.address || null,
+          unit: fullUserProfile?.unit || fullUserProfile?.unit_apt || null,
           isOfficial: user.is_official === true
         }
       })

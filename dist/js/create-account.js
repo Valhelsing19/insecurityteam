@@ -210,12 +210,12 @@ document.addEventListener('DOMContentLoaded', function() {
             throw new Error('Failed to save authentication. Please try again.');
           }
 
-          // Redirect to dashboard
+          // Redirect to resident page
           try {
-            window.location.href = '/dashboard';
+            window.location.href = '/resident/page';
           } catch (redirectError) {
             console.error('Redirect error:', redirectError);
-            alert('Account created successfully, but redirect failed. Please navigate to the dashboard manually.');
+            alert('Account created successfully, but redirect failed. Please navigate to the resident page manually.');
             if (createAccountBtn) {
               createAccountBtn.disabled = false;
               createAccountBtn.textContent = 'Create Account';
@@ -364,12 +364,12 @@ document.addEventListener('DOMContentLoaded', function() {
           throw new Error('Failed to save authentication. Please try again.');
         }
 
-        // Redirect to dashboard
+        // Redirect to resident page
         try {
-          window.location.href = '/dashboard';
+          window.location.href = '/resident/page';
         } catch (redirectError) {
           console.error('Redirect error:', redirectError);
-          alert('Sign-up successful, but redirect failed. Please navigate to the dashboard manually.');
+          alert('Sign-up successful, but redirect failed. Please navigate to the resident page manually.');
           if (createAccountBtn) {
             createAccountBtn.disabled = false;
             createAccountBtn.textContent = 'Create Account';

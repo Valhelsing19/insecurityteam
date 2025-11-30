@@ -234,6 +234,8 @@ exports.handler = async (event, context) => {
           email: email,
           name: `${first_name} ${last_name}`,
           username: username,
+          phone: phone,
+          address: address,
           isOfficial: false
         }
       })

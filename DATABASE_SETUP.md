@@ -126,6 +126,8 @@ CREATE INDEX idx_google_id ON users(google_id);
 CREATE INDEX idx_email ON users(email);
 ```
 
+**Note:** For the officials system, you also need to create the `officials`, enhanced `maintenance_requests`, and `request_activity_log` tables. See `database/schema/officials_system.sql` or `OFFICIAL_ACCOUNT_SETUP.md` for details.
+
 If you need to add the Google fields to an existing table:
 
 ```sql

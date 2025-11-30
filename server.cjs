@@ -48,9 +48,38 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Handle route redirects
+  const urlPath = req.url.split('?')[0]; // Remove query string
+  
+  // Route redirects (matching netlify.toml)
+  const routeRedirects = {
+    '/login': '/login.html',
+    '/register': '/register.html',
+    '/dashboard': '/dashboard.html',
+    '/login/official': '/login/official.html',
+    '/dashboard/official': '/dashboard/official.html',
+    '/official/page': '/official/page.html',
+    '/all-requests': '/all-requests/official',
+    '/reports': '/reports.html'
+  };
+
+  // Check for exact match
+  if (routeRedirects[urlPath]) {
+    res.writeHead(302, { 'Location': routeRedirects[urlPath] });
+    res.end();
+    return;
+  }
+
+  // Check for path with trailing slash
+  const urlPathWithSlash = urlPath + '/';
+  if (routeRedirects[urlPathWithSlash]) {
+    res.writeHead(302, { 'Location': routeRedirects[urlPathWithSlash] });
+    res.end();
+    return;
+  }
+
   // Serve static files
   let filePath;
-  const urlPath = req.url.split('?')[0]; // Remove query string
   
   if (urlPath === '/' || urlPath === '') {
     filePath = path.join(DIST_DIR, 'index.html');

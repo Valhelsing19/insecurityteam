@@ -30,19 +30,19 @@
         Authorized Personnel Only
       </div>
 
-      <div class="alert alert-error" id="alertMessage">
+      <div class="alert alert-error" id="alertMessage" style="display: none;">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
           <path d="M12 8v4m0 4h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
-        <span id="alertText">Invalid email or password</span>
+        <span id="alertText">Invalid username or password</span>
       </div>
 
       <form id="loginForm" novalidate>
-        <div class="field" id="emailField">
-          <label for="email">Official Email</label>
-          <input id="email" name="email" type="email" placeholder="name@city.gov" autocomplete="email" required>
-          <span class="error-message">Please enter a valid email address</span>
+        <div class="field" id="usernameField">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" placeholder="Enter your username" autocomplete="username" required>
+          <span class="error-message">Please enter your username</span>
         </div>
 
         <div class="field" id="passwordField">
@@ -59,20 +59,11 @@
           <span class="error-message">Password is required</span>
         </div>
 
-        <a href="#" class="forgot-password">Forgot password?</a>
-
         <div class="action-buttons">
           <button type="submit" class="btn btn-secure" id="loginBtn">
             <span class="spinner"></span>
             <span class="btn-text">Secure Login</span>
           </button>
-        </div>
-
-        <div class="divider">— or —</div>
-
-        <div class="alt-auth">
-          <span>Use alternate ID?</span>
-          <a href="#">Sign in with Gov ID</a>
         </div>
 
         <div class="back-resident">

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smart Neighborhood - Resident Page</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/resident-page.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <div class="logo-circle">
+                        <img src="/images/dashboard-logo.png" alt="Smart Neighborhood Logo">
+                    </div>
+                    <div class="logo-text">
+                        <h2>Smart Neighborhood</h2>
+                        <p>resident Portal</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="navigation">
+                <a href="/dashboard" class="nav-button">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 10L7.5 2.5L7.5 10" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                        <rect x="2.5" y="1.67" width="15" height="15.83" stroke="currentColor" stroke-width="1.67"/>
+                    </svg>
+                    <span class="nav-text">Home</span>
+                </a>
+                <a href="/submit-request" class="nav-button">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <rect x="1.67" y="1.67" width="16.67" height="16.67" stroke="currentColor" stroke-width="1.67"/>
+                        <path d="M6.67 10H13.33" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                        <path d="M10 6.67V13.33" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    </svg>
+                    <span class="nav-text">Submit Request</span>
+                </a>
+                <a href="/my-requests" class="nav-button">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <rect x="3.33" y="1.67" width="13.33" height="16.67" stroke="currentColor" stroke-width="1.67"/>
+                        <circle cx="11.67" cy="1.67" r="2.5" fill="currentColor"/>
+                        <path d="M6.67 7.5H6.67" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                        <path d="M6.67 10.83H13.33" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                        <path d="M6.67 14.17H13.33" stroke="currentColor" stroke-width="1.67" stroke-linecap="round"/>
+                    </svg>
+                    <span class="nav-text">My Requests</span>
+                </a>
+                <a href="/settings" class="nav-button">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="none">
+                        <path d="M2.54 1.68L14.93 16.64" stroke="currentColor" stroke-width="1.67"/>
+                        <circle cx="7.5" cy="7.5" r="2.5" stroke="currentColor" stroke-width="1.67"/>
+                    </svg>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="logout-button">
+                    <svg class="logout-icon" viewBox="0 0 16 16" fill="none">
+                        <path d="M10.66 4.66L13.33 7.33L10.66 10" stroke="#E7000B" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M13.33 7.33H6" stroke="#E7000B" stroke-width="1.33" stroke-linecap="round"/>
+                        <path d="M6 8H2" stroke="#E7000B" stroke-width="1.33" stroke-linecap="round"/>
+                        <path d="M2 2V14" stroke="#E7000B" stroke-width="1.33" stroke-linecap="round"/>
+                    </svg>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <div class="welcome-content">
+                    <div class="welcome-badges">
+                        <span class="welcome-badge">Welcome Back</span>
+                        <span class="welcome-badge">resident</span>
+                    </div>
+                    <h1 class="welcome-title">Smart Neighborhood System</h1>
+                    <p class="welcome-description">Manage your maintenance requests and stay updated with neighborhood activities</p>
+                    <div class="welcome-actions">
+                        <a href="/submit-request" class="welcome-button primary">
+                            <span>Submit Request</span>
+                            <svg class="welcome-icon" viewBox="0 0 16 16" fill="none">
+                                <path d="M6 12L10 8L6 4" stroke="#155DFC" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <button class="welcome-button secondary">Learn More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Onboarding Message for New Users -->
+            <div id="onboarding-message" class="onboarding-message" style="display: none;">
+                <div class="onboarding-content">
+                    <svg class="onboarding-icon" viewBox="0 0 20 20" fill="none">
+                        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="2"/>
+                        <path d="M10 6V10M10 14H10.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <div class="onboarding-text">
+                        <h3>Welcome to Smart Neighborhood!</h3>
+                        <p>Get started by submitting your first maintenance request. Our team is here to help keep your neighborhood in great shape.</p>
+                    </div>
+                    <button class="onboarding-close" onclick="this.parentElement.parentElement.style.display='none'">
+                        <svg viewBox="0 0 16 16" fill="none">
+                            <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-label">Active Requests</div>
+                        <div class="stat-number" id="stat-active">0</div>
+                    </div>
+                    <div class="stat-icon blue">
+                        <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+                            <rect x="12" y="6" width="4" height="8" stroke="#155DFC" stroke-width="2"/>
+                            <rect x="2" y="2" width="20" height="20" stroke="#155DFC" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-label">Completed</div>
+                        <div class="stat-number" id="stat-completed">0</div>
+                    </div>
+                    <div class="stat-icon green">
+                        <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+                            <path d="M9 10L9 6L9 10" stroke="#00A63E" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M4 10L10 10L16 10" stroke="#00A63E" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-label">Pending Review</div>
+                        <div class="stat-number" id="stat-pending">0</div>
+                    </div>
+                    <div class="stat-icon orange">
+                        <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+                            <path d="M1.98 2.99L20.01 18.01" stroke="#E17100" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M12 9L12 0L12 9" stroke="#E17100" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M12 16.99L12 12L12 16.99" stroke="#E17100" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="actions-grid">
+                    <div class="action-card">
+                        <div class="action-image" style="background: var(--gradient-blue);">
+                            <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+                                <rect x="8" y="12" width="8" height="0" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <rect x="12" y="8" width="0" height="8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <rect x="2.5" y="1.67" width="15" height="15.83" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="action-content">
+                            <h3 class="action-title">Submit New Request</h3>
+                            <p class="action-description">Report a maintenance issue</p>
+                        </div>
+                    </div>
+
+                    <div class="action-card">
+                        <div class="action-image" style="background: var(--gradient-purple);">
+                            <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+                                <rect x="4" y="2" width="16" height="20" stroke="white" stroke-width="2"/>
+                                <path d="M8 9H8.01M8 13H8.01" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M6.67 9H6.67M6.67 13H6.67" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="action-content">
+                            <h3 class="action-title">View My Requests</h3>
+                            <p class="action-description">Track your submissions</p>
+                        </div>
+                    </div>
+
+                    <div class="action-card">
+                        <div class="action-image" style="background: var(--gradient-green);">
+                            <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+                                <circle cx="16" cy="7" r="3" stroke="white" stroke-width="2"/>
+                                <rect x="2" y="7" width="20" height="10" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="action-content">
+                            <h3 class="action-title">Dashboard</h3>
+                            <p class="action-description">View statistics & insights</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="bottom-section">
+                <div class="left-column">
+                    <!-- Recent Activity -->
+                    <div class="recent-activity">
+                        <div class="activity-header">
+                            <h3 class="section-title">Recent Activity</h3>
+                            <button class="view-all-button">
+                                <span>View All</span>
+                                <svg class="view-all-icon" viewBox="0 0 16 16" fill="none">
+                                    <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="activity-list">
+                            <!-- Activity items will be dynamically loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <!-- Announcements -->
+                    <div class="announcements">
+                        <div class="announcements-header">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <svg class="announcements-icon" viewBox="0 0 20 20" fill="none">
+                                    <path d="M8.56 17.5L10.45 17.5" stroke="#364153" stroke-width="1.67" stroke-linecap="round"/>
+                                    <rect x="2.5" y="1.67" width="15" height="12.5" stroke="#364153" stroke-width="1.67"/>
+                                </svg>
+                                <h2 class="section-title">Announcements</h2>
+                            </div>
+                            <button class="view-all-button" id="announcements-view-all">
+                                <span>View All</span>
+                                <svg class="view-all-icon" viewBox="0 0 16 16" fill="none">
+                                    <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="announcements-list" id="announcements-list">
+                            <!-- Announcements will be dynamically loaded here -->
+                            <div class="announcement-loading">Loading announcements...</div>
+                        </div>
+                    </div>
+
+                    <!-- Need Help Card -->
+                    <div class="help-card">
+                        <h3 class="help-title">Need Help?</h3>
+                        <p class="help-description">Our support team is here to assist you 24/7</p>
+                        <a href="/support" class="help-button">Contact Support</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Announcement Modal -->
+    <div id="announcement-modal" class="announcement-modal" style="display: none;">
+        <div class="modal-overlay" onclick="closeAnnouncementModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAnnouncementModal()">
+                <svg viewBox="0 0 16 16" fill="none">
+                    <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <div class="modal-header">
+                <div class="modal-badge" id="modal-badge"></div>
+                <h2 class="modal-title" id="modal-title"></h2>
+                <p class="modal-time" id="modal-time"></p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3 class="modal-section-title">Description</h3>
+                    <p class="modal-description" id="modal-description"></p>
+                </div>
+                <div class="modal-details" id="modal-details"></div>
+                <div id="modal-media" class="modal-media-section" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/resident-page.js"></script>
+</body>
+</html>
+
+
